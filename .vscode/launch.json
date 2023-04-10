@@ -6,16 +6,10 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Current File",
-            "request": "launch",
-            "mainClass": "${file}"
-        },
-        {
-            "type": "java",
             "name": "App",
             "request": "launch",
-            "mainClass": "App",
-            "projectName": "FuelFinder_a10a3104",
+            "mainClass": "Main",
+            "projectName": "FuelFinderNew_60ff31fc",
             "vmArgs": "--module-path \"C:/Program Files/Java/javafx-sdk-17.0.6/lib\" --add-modules javafx.controls,javafx.fxml"
         }
     ]
