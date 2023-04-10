@@ -1,0 +1,1 @@
+to get info about type instanceof can be used which will add one point to the code review
