@@ -10,7 +10,7 @@ import java.util.List;
 
 public class UserManager {
     private static UserManager instance;
-    private List<? extends User> registeredUsers;
+    private static List<User> registeredUsers;
 
     private UserManager() {
         registeredUsers = new ArrayList<>();
@@ -25,26 +25,38 @@ public class UserManager {
 
     // the search could be done in a better way by inserting users into some kind of
     // a data structure (AVL tree) will maybe add this later
-    public boolean userExist(String username) {
+    public User userExist(String username) {
         for (User user : registeredUsers) {
             if (user.getName().equals(username)) {
-                return true;
+                return user;
             }
         }
-        return false;
+        return null;
     }
 
-    public User addUser() {
+    public User registerUser(User in) {
+        User potentialUser = userExist(in.getName());
 
+        if (potentialUser != null) {
+            registeredUsers.add(potentialUser);
+            // change to next scene with user already logged in
+            System.out.println("User registered successfully!");
+            return potentialUser;
+        } else {
+            // handle the situation
+            System.out.println("Username already taken. Please choose a different username.");
+        }
+        return null;
     }
+
+    // public void logUserIn() {
+    // if
+    // }
 
     public void saveToFile(String filename) {
-        try {
-            FileOutputStream fileOut = new FileOutputStream(filename);
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(this);
-            out.close();
-            fileOut.close();
+        try (FileOutputStream fileOut = new FileOutputStream(filename);
+                ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+            out.writeObject(registeredUsers);
         } catch (IOException i) {
             i.printStackTrace();
         }
@@ -52,12 +64,10 @@ public class UserManager {
 
     public static User loadFromFile(String filename) {
         User user = null;
-        try {
-            FileInputStream fileIn = new FileInputStream(filename);
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            user = (User) in.readObject();
-            in.close();
-            fileIn.close();
+        try (FileInputStream fileIn = new FileInputStream(filename);
+                ObjectInputStream in = new ObjectInputStream(fileIn)) {
+            registeredUsers = (List<User>) in.readObject();
+
         } catch (IOException i) {
             i.printStackTrace();
         } catch (ClassNotFoundException c) {
