@@ -36,4 +36,9 @@ public abstract class Point {
         setSuccessors(successors);
         return this;
     }
+
+    @Override
+    public String toString() {
+        return this.getName(); // may be used to show name in gui
+    }
 }
