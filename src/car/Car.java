@@ -5,7 +5,7 @@ public class Car {
     private String licenseNumber;
     private String model;
     private FuelType fuel;
-    // private Location location;
+    private Location location;
 
     public Car(int year, String licenseNumber, String model, FuelType fuel) {
         this.year = year;
