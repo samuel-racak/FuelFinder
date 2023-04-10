@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import car.Car;
 
-public class User {
+public class User implements Comparable<User> {
 
     private UserType userType; // this indicates that user is not admin
     private String name;
@@ -90,5 +90,10 @@ public class User {
 
     public void setCar(Car car) {
         this.car = car;
+    }
+
+    @Override
+    public int compareTo(User other) {
+        return this.name.compareTo(other.getName());
     }
 }
