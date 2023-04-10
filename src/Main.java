@@ -13,8 +13,10 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/resources/login.fxml"));
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/resources/login.css").toExternalForm());
         primaryStage.setTitle("login page");
-        primaryStage.setScene(new Scene(root));
+        primaryStage.setScene(scene);
         primaryStage.show();
 
         primaryStage.setOnCloseRequest(event -> {
@@ -23,18 +25,35 @@ public class Main extends Application {
         });
     }
 
+    // similar method could be used for logout button in an application
     private void logout(Stage primaryStage) {
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Logout");
         alert.setHeaderText("You will be logged out");
-        alert.setContentText("are you sure you want to exit?");
+        alert.setContentText("Are you sure you want to exit?");
 
         if (alert.showAndWait().get() == ButtonType.OK) {
             System.out.println("Logging out");
-            // do some work when logging out
+            // TODO some work when logging out
             primaryStage.close();
         }
     }
+
+    /*
+     * private void logout(ActionEvent event) {
+     * Alert alert = new Alert(AlertType.CONFIRMATION);
+     * alert.setTitle("Logout");
+     * alert.setHeaderText("You will be logged out");
+     * alert.setContentText("Are you sure you want to exit?");
+     *
+     * if (alert.showAndWait().get() == ButtonType.OK) {
+     * stage = (Stage) scenePane.getScene().getWindow();
+     * System.out.println("Logging out");
+     * // do some work when logging out
+     * stage.close();
+     * }
+     * }
+     */
 
     @Override
     public void stop() throws Exception {
