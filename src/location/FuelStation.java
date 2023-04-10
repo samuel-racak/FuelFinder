@@ -8,10 +8,11 @@ import car.FuelType;
 public class FuelStation extends Point {
     private Map<FuelType, Integer> fuels;
     private List<Service> services;
-    private int rating;
+    private double rating;
+    private int count = 0;
 
     public FuelStation(String name, List<Point> successors, Map<FuelType, Integer> fuels, List<Service> services,
-            int rating) {
+            double rating) {
         super(name, successors);
         this.fuels = fuels;
         this.services = services;
@@ -26,6 +27,10 @@ public class FuelStation extends Point {
         this.fuels = fuels;
     }
 
+    public void addFuel(FuelType fuelType, int price) {
+        fuels.putIfAbsent(fuelType, price);
+    }
+
     public List<Service> getServices() {
         return this.services;
     }
@@ -34,18 +39,17 @@ public class FuelStation extends Point {
         this.services = services;
     }
 
-    public int getRating() {
+    public double getRating() {
         return this.rating;
     }
 
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
+    // public void setRating(int rating) {
+    // this.rating = rating;
+    // }
 
-    public void updateRating(int newRating) {
-        // rating = rating
-        ;
-        // TODO implement some type of ranking system based on user feedback
+    public void updateRating(double newRating) {
+        rating = (rating + newRating) / (++count);
+        // TODO check if correct weighted rating
     }
 
     public FuelStation fuels(Map<FuelType, Integer> fuels) {
@@ -58,8 +62,8 @@ public class FuelStation extends Point {
         return this;
     }
 
-    public FuelStation rating(int rating) {
-        setRating(rating);
+    public FuelStation rating(double rating) {
+        updateRating(rating);
         return this;
     }
 }
