@@ -1,6 +1,5 @@
 package location;
 
-import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 
@@ -11,10 +10,9 @@ public class FuelStation extends Point {
     private List<Service> services;
     private int rating;
 
-    public FuelStation() {
-    }
-
-    public FuelStation(Map<FuelType, Integer> fuels, List<Service> services, int rating) {
+    public FuelStation(String name, List<Point> successors, Map<FuelType, Integer> fuels, List<Service> services,
+            int rating) {
+        super(name, successors);
         this.fuels = fuels;
         this.services = services;
         this.rating = rating;
