@@ -42,6 +42,12 @@ public class FuelStation extends Point {
         this.rating = rating;
     }
 
+    public void updateRating(int newRating) {
+        // rating = rating
+        ;
+        // TODO implement some type of ranking system based on user feedback
+    }
+
     public FuelStation fuels(Map<FuelType, Integer> fuels) {
         setFuels(fuels);
         return this;
