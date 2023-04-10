@@ -2,14 +2,14 @@ package location;
 
 public class Route {
     private int length;
-    private Point pointA;
-    private Point pointB;
+    private Point start;
+    private Point finish;
     private int maxSpeed;
 
     public Route(int length, Point pointA, Point pointB, int maxSpeed) {
         this.length = length;
         this.pointA = pointA;
-        this.pointB = pointB;
+        this.finish = pointB;
         this.maxSpeed = maxSpeed;
     }
 
@@ -29,12 +29,12 @@ public class Route {
         this.pointA = pointA;
     }
 
-    public Point getPointB() {
-        return this.pointB;
+    public Point getFinish() {
+        return this.finish;
     }
 
-    public void setPointB(Point pointB) {
-        this.pointB = pointB;
+    public void setFinish(Point pointB) {
+        this.finish = pointB;
     }
 
     public int getMaxSpeed() {
