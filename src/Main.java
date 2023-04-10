@@ -1,12 +1,11 @@
-
-import java.io.File;
-import java.io.FileInputStream;
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -17,6 +16,24 @@ public class Main extends Application {
         primaryStage.setTitle("login page");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+
+        primaryStage.setOnCloseRequest(event -> {
+            event.consume(); // will prevent the app from closing when user clicks cancel
+            logout(primaryStage);
+        });
+    }
+
+    private void logout(Stage primaryStage) {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Logout");
+        alert.setHeaderText("You will be logged out");
+        alert.setContentText("are you sure you want to exit?");
+
+        if (alert.showAndWait().get() == ButtonType.OK) {
+            System.out.println("Logging out");
+            // do some work when logging out
+            primaryStage.close();
+        }
     }
 
     @Override
