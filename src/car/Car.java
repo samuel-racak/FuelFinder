@@ -1,5 +1,7 @@
 package car;
 
+import location.Location;
+
 public class Car {
     private int year;
     private String licenseNumber;
@@ -7,11 +9,12 @@ public class Car {
     private FuelType fuel;
     private Location location;
 
-    public Car(int year, String licenseNumber, String model, FuelType fuel) {
+    public Car(int year, String licenseNumber, String model, FuelType fuel, Location location) {
         this.year = year;
         this.licenseNumber = licenseNumber;
         this.model = model;
         this.fuel = fuel;
+        this.location = location;
     }
 
     public int getYear() {
@@ -44,5 +47,38 @@ public class Car {
 
     public void setFuel(FuelType fuel) {
         this.fuel = fuel;
+    }
+
+    public Location getLocation() {
+        return this.location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public Car year(int year) {
+        setYear(year);
+        return this;
+    }
+
+    public Car licenseNumber(String licenseNumber) {
+        setLicenseNumber(licenseNumber);
+        return this;
+    }
+
+    public Car model(String model) {
+        setModel(model);
+        return this;
+    }
+
+    public Car fuel(FuelType fuel) {
+        setFuel(fuel);
+        return this;
+    }
+
+    public Car location(Location location) {
+        setLocation(location);
+        return this;
     }
 }
