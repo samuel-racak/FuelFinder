@@ -10,7 +10,7 @@ import java.util.List;
 
 public class UserManager {
     private static UserManager instance;
-    private static List<User> registeredUsers;
+    private static List<User> registeredUsers; // could use TreeMap to save users
 
     private UserManager() {
         registeredUsers = new ArrayList<>();
