@@ -6,10 +6,10 @@ public class Route {
     private Point finish;
     private int maxSpeed;
 
-    public Route(int length, Point pointA, Point pointB, int maxSpeed) {
+    public Route(int length, Point start, Point finish, int maxSpeed) {
         this.length = length;
-        this.pointA = pointA;
-        this.finish = pointB;
+        this.start = start;
+        this.finish = finish;
         this.maxSpeed = maxSpeed;
     }
 
@@ -21,20 +21,20 @@ public class Route {
         this.length = length;
     }
 
-    public Point getPointA() {
-        return this.pointA;
+    public Point getStart() {
+        return this.start;
     }
 
-    public void setPointA(Point pointA) {
-        this.pointA = pointA;
+    public void setStart(Point start) {
+        this.start = start;
     }
 
     public Point getFinish() {
         return this.finish;
     }
 
-    public void setFinish(Point pointB) {
-        this.finish = pointB;
+    public void setFinish(Point finish) {
+        this.finish = finish;
     }
 
     public int getMaxSpeed() {
