@@ -6,7 +6,7 @@ import car.Car;
 
 public class User {
 
-    private UserType userType = UserType.BASIC_USER; // this indicates that user is not admin
+    private UserType userType; // this indicates that user is not admin
     private String name;
     private String email;
     private String password;
