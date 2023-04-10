@@ -12,4 +12,6 @@ public class PremiumUser extends User {
         super(userType, name, email, password, dataOfBirth, gender, car);
         this.card = card;
     }
+
+    // TODO add some methods for premium user
 }

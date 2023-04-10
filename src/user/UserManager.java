@@ -49,9 +49,7 @@ public class UserManager {
         return null;
     }
 
-    // public void logUserIn() {
-    // if
-    // }
+    // TODO add more methods for logging user in, deletion of user etc.
 
     public void saveToFile(String filename) {
         try (FileOutputStream fileOut = new FileOutputStream(filename);
