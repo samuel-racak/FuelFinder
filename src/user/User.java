@@ -6,6 +6,7 @@ import car.Car;
 
 public class User {
 
+    private UserType role = UserType.BASIC_USER; // this indicates that user is not admin
     private String name;
     private String email;
     private String password;
@@ -15,7 +16,7 @@ public class User {
 
     /**
      * this is a basic user account created by UserManager
-     * 
+     *
      * @param name
      * @param email
      * @param password
@@ -23,7 +24,8 @@ public class User {
      * @param gender
      * @param car
      */
-    public User(String name, String email, String password, LocalDate dataOfBirth, String gender, Car car) {
+    public User(UserType role, String name, String email, String password, LocalDate dataOfBirth, String gender, Car car) {
+        this.role = role;
         this.name = name;
         this.email = email;
         this.password = password;
@@ -79,4 +81,6 @@ public class User {
     public void setCar(Car car) {
         this.car = car;
     }
+
+    publc
 }
