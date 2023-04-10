@@ -25,14 +25,16 @@ public class LoginController {
         String password = passwordTextField.getText();
         // call some other thread to check if login info correct ? y -> move to next
         // scene
+        System.out.println("handle login");
         System.out.println("----------");
         System.out.println(userName);
         System.out.println(password);
         System.out.println("----------");
+        // TODO handle login
     }
 
     public void register(ActionEvent event) {
         System.out.println("user wants to register");
-        // go to other scene
+        // TODO go to other scene
     }
 }
