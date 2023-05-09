@@ -1,4 +1,4 @@
-package resources;
+package controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,11 +7,17 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 public class LoginController {
-    // @FXML
-    // private Button registerButton;
+    private SceneManager sceneManager;
 
-    // @FXML
-    // private Button loginButton;
+    public LoginController() {
+        sceneManager = SceneManager.getInstance();
+    }
+
+    @FXML
+    private Button registerButton;
+
+    @FXML
+    private Button loginButton;
 
     @FXML
     private TextField userNameTextField;
@@ -35,6 +41,7 @@ public class LoginController {
 
     public void register(ActionEvent event) {
         System.out.println("user wants to register");
+        sceneManager.switchToScene("registration");
         // TODO go to other scene
     }
 }
