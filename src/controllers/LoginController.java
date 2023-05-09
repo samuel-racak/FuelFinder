@@ -6,13 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-public class LoginController {
-    private SceneManager sceneManager;
-
-    public LoginController() {
-        sceneManager = SceneManager.getInstance();
-    }
-
+public class LoginController extends BasicController {
     @FXML
     private Button registerButton;
 
@@ -24,6 +18,10 @@ public class LoginController {
 
     @FXML
     private PasswordField passwordTextField;
+
+    public void setTitle() {
+        stage.setTitle("Login");
+    }
 
     @FXML
     public void login(ActionEvent event) {
@@ -41,7 +39,7 @@ public class LoginController {
 
     public void register(ActionEvent event) {
         System.out.println("user wants to register");
-        sceneManager.switchToScene("registration");
+        sceneManager.switchToScene("register");
         // TODO go to other scene
     }
 }

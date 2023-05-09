@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -11,50 +10,58 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="600.0" prefWidth="898.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="resources.RegistrationController">
+<AnchorPane prefHeight="634.0" prefWidth="898.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="resources.RegistrationController">
    <children>
       <ImageView fx:id="imageView" fitHeight="421.0" fitWidth="387.0" layoutX="419.0" layoutY="151.0" opacity="0.7" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Cyber3.jpg" />
          </image>
       </ImageView>
-      <Label layoutX="292.0" layoutY="59.0" prefHeight="65.0" prefWidth="314.0" text="Registration Form" textAlignment="CENTER">
-         <font>
-            <Font name="System Bold" size="36.0" />
-         </font></Label>
       <TextField fx:id="userNameTextField" layoutX="170.0" layoutY="157.0" prefHeight="37.0" prefWidth="205.0" promptText="insert your username" />
       <PasswordField fx:id="passwordTextField" layoutX="170.0" layoutY="262.0" prefHeight="37.0" prefWidth="205.0" promptText="insert password" />
-      <Button fx:id="loginButton" layoutX="221.0" layoutY="481.0" mnemonicParsing="false" onAction="#createUser" prefHeight="37.0" prefWidth="103.0" text="Login" textAlignment="CENTER" />
-      <Button fx:id="goPremiumButton" layoutX="211.0" layoutY="429.0" mnemonicParsing="false" onAction="#goPremium" prefHeight="37.0" prefWidth="124.0" text="Go premium">
+      <Button fx:id="loginButton" layoutX="170.0" layoutY="568.0" mnemonicParsing="false" onAction="#createUser" prefHeight="37.0" prefWidth="103.0" text="Login" textAlignment="CENTER">
          <font>
-            <Font name="System Bold" size="13.0" />
+            <Font name="System Bold" size="12.0" />
          </font></Button>
-      <Text layoutX="60.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+      <Text layoutX="62.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
          <font>
             <Font size="16.0" />
          </font>
       </Text>
-      <Text layoutX="65.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+      <Text layoutX="62.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
          <font>
             <Font size="16.0" />
          </font>
       </Text>
       <TextField fx:id="userEmailTextField" layoutX="170.0" layoutY="208.0" prefHeight="37.0" prefWidth="205.0" promptText="insert your email" />
       <DatePicker fx:id="dateOfBirthPicker" layoutX="170.0" layoutY="315.0" prefHeight="37.0" prefWidth="205.0" promptText="choose the date of birth" />
-      <Text layoutX="65.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="66.6015625">
+      <Text layoutX="63.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="66.6015625">
          <font>
             <Font size="16.0" />
          </font>
       </Text>
-      <Text layoutX="65.0" layoutY="333.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date of Birth">
+      <Text layoutX="63.0" layoutY="340.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date of Birth">
          <font>
             <Font size="16.0" />
          </font>
       </Text>
       <TextField fx:id="userGenderTextField" layoutX="170.0" layoutY="370.0" prefHeight="37.0" prefWidth="205.0" promptText="insert your gender" />
-      <Text layoutX="62.0" layoutY="394.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender" wrappingWidth="71.0546875">
+      <Text layoutX="64.0" layoutY="393.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender" wrappingWidth="71.0546875">
          <font>
             <Font size="16.0" />
+         </font>
+      </Text>
+      <Text layoutX="62.0" layoutY="443.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Card details" wrappingWidth="89.3828125">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <TextField fx:id="cardNumber" layoutX="170.0" layoutY="419.0" prefHeight="37.0" prefWidth="205.0" promptText="insert 16 numbers" />
+      <DatePicker fx:id="cardExpirationDate" layoutX="170.0" layoutY="466.0" prefHeight="37.0" prefWidth="124.0" promptText="expiration date" />
+      <TextField fx:id="cardCCV" layoutX="170.0" layoutY="512.0" prefHeight="37.0" prefWidth="124.0" promptText="insert CCV" />
+      <Text layoutX="277.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Premium Registration">
+         <font>
+            <Font name="System Bold" size="36.0" />
          </font>
       </Text>
    </children>

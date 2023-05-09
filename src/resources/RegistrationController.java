@@ -1,6 +1,5 @@
 package resources;
 
-import controllers.SceneManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -13,12 +12,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-public class RegistrationController {
-    private SceneManager sceneManager;
+import controllers.BasicController;
 
-    public RegistrationController() {
-        sceneManager = SceneManager.getInstance();
-    }
+public class RegistrationController extends BasicController {
 
     @FXML
     private TextField userNameTextField;
@@ -46,6 +42,7 @@ public class RegistrationController {
     private static final String IMAGE_LOC = "/resources/Cyber";
     private static final int TIME = 2;
 
+    @FXML
     public void initialize() {
         imageView.setImage(new Image(IMAGE_LOC + "1.jpg"));
         // imageView.setImage(new Image(getClass().getResource(IMAGE_LOC +
@@ -53,13 +50,17 @@ public class RegistrationController {
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(TIME), event -> {
             currentImageIndex = (currentImageIndex + 1) % NUM_IMAGES;
-            imageView.setImage(new Image(IMAGE_LOC + currentImageIndex + ".jpg"));
+            imageView.setImage(new Image(IMAGE_LOC + (currentImageIndex + 1) + ".jpg"));
             // imageView.setImage(
             // new Image(getClass().getResource(IMAGE_LOC + (currentImageIndex + 1) +
             // ".jpg").toExternalForm()));
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+    }
+
+    public void setTitle() {
+        stage.setTitle("Registration");
     }
 
     @FXML
@@ -70,6 +71,7 @@ public class RegistrationController {
         System.out.println("user email:" + userEmailTextField.getText());
         System.out.println("user password:" + passwordTextField.getText());
         System.out.println("user date of birth:" + dateOfBirthPicker.getValue());
+        sceneManager.switchToScene("login");
 
         // TODO add user and go to other scene
     }
@@ -77,6 +79,7 @@ public class RegistrationController {
     @FXML
     private void goPremium(ActionEvent event) {
         System.out.println("user wants to go premium");
+        sceneManager.switchToScene("premium");
         // TODO save user details and go to other scene
     }
 }
