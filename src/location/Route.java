@@ -1,5 +1,11 @@
 package location;
 
+// Todo: rename: maxSpeed -> speedLimit
+// Todo: rename: length -> distance
+// Todo: rename: start -> from
+// Todo: rename: finish -> to
+// Todo: rename: Class to Line
+
 public class Route {
     private int length;
     private Point start;

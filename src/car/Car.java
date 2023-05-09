@@ -7,6 +7,8 @@ public class Car {
     private String licenseNumber;
     private String model;
     private FuelType fuel;
+    // TODO add liters of fuel in tank
+    // TODO create new class of vehicle
     private Location location;
 
     public Car(int year, String licenseNumber, String model, FuelType fuel, Location location) {
