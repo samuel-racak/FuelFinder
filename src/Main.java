@@ -1,3 +1,6 @@
+import java.util.Optional;
+
+import controllers.SceneManager;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -7,37 +10,58 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/resources/login.fxml"));
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("/resources/login.css").toExternalForm());
-        primaryStage.setTitle("login page");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        SceneManager sceneManager = new SceneManager(primaryStage);
+        // sceneManager.addScene("login", "login.fxml");
+        sceneManager.addScene("register", "register.fxml");
+        // sceneManager.switchToScene("login");
+        sceneManager.switchToScene("register");
+
+        // Parent root =
+        // FXMLLoader.load(getClass().getResource("/resources/login.fxml"));
+        // Scene scene = new Scene(root);
+        // scene.getStylesheets().add(getClass().getResource("/resources/login.css").toExternalForm());
+        // primaryStage.setTitle("login page");
+        // primaryStage.setScene(scene);
+        // primaryStage.show();
 
         primaryStage.setOnCloseRequest(event -> {
-            event.consume(); // will prevent the app from closing when user clicks cancel
-            logout(primaryStage);
+            if (confirmLogout(primaryStage)) {
+                primaryStage.close();
+                Platform.exit();
+            } else {
+                event.consume(); // will prevent the app from closing when user clicks cancel
+            }
+            // logout(primaryStage);
         });
     }
 
-    // similar method could be used for logout button in an application
-    private void logout(Stage primaryStage) {
+    private boolean confirmLogout(Window window) {
         Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.initOwner(window); // this will make the alert window the child of the main window
         alert.setTitle("Logout");
-        alert.setHeaderText("You will be logged out");
-        alert.setContentText("Are you sure you want to exit?");
+        alert.setHeaderText("Are you sure you want to exit?");
 
-        if (alert.showAndWait().get() == ButtonType.OK) {
-            System.out.println("Logging out");
-            // TODO some work when logging out
-            primaryStage.close();
-        }
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == ButtonType.OK;
     }
+
+    // private void logout(Stage primaryStage) {
+    // Alert alert = new Alert(AlertType.CONFIRMATION);
+    // alert.setTitle("Logout");
+    // alert.setHeaderText("You will be logged out");
+    // alert.setContentText("Are you sure you want to exit?");
+
+    // if (alert.showAndWait().get() == ButtonType.OK) {
+    // System.out.println("Logging out");
+    // // TODO some work when logging out
+    // primaryStage.close();
+    // }
 
     /*
      * private void logout(ActionEvent event) {
