@@ -29,9 +29,9 @@ public class SceneManager {
         return instance;
     }
 
-    // public Stage getStage() {
-    // return stage;
-    // }
+    public Stage getStage() {
+        return stage;
+    }
 
     public void addScene(String name, String fxmlFile) {
         try {
@@ -53,7 +53,9 @@ public class SceneManager {
 
         Scene scene = scenes.get(name);
         BasicController controller = controllers.get(name);
-        controller.setTitle();
+        if (controller != null) {
+            controller.setTitle();
+        }
 
         if (scene != null) {
 
@@ -76,15 +78,6 @@ public class SceneManager {
                 fadeIn.play();
             });
         }
-
-        // Scene scene = scenes.get(name);
-        // if (scene != null) {
-        // fadeOut.play();
-        // System.out.println("switching to scene: " + name);
-        // stage.setScene(scene);
-        // stage.show();
-        // fadeIn.play();
-        // }
     }
 
     public <T extends BasicController> T getController(String name) {
