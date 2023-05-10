@@ -60,6 +60,7 @@ public class RegistrationController extends BasicController {
         timeline.play();
     }
 
+    @Override
     public void setTitle() {
         stage.setTitle("Registration");
     }
