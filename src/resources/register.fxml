@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -18,10 +17,6 @@
             <Image url="@Cyber3.jpg" />
          </image>
       </ImageView>
-      <Label layoutX="292.0" layoutY="59.0" prefHeight="65.0" prefWidth="314.0" text="Registration Form" textAlignment="CENTER">
-         <font>
-            <Font name="System Bold" size="36.0" />
-         </font></Label>
       <TextField fx:id="userNameTextField" layoutX="170.0" layoutY="157.0" prefHeight="37.0" prefWidth="205.0" promptText="insert your username" />
       <PasswordField fx:id="passwordTextField" layoutX="170.0" layoutY="262.0" prefHeight="37.0" prefWidth="205.0" promptText="insert password" />
       <Button fx:id="loginButton" layoutX="221.0" layoutY="481.0" mnemonicParsing="false" onAction="#createUser" prefHeight="37.0" prefWidth="103.0" text="Login" textAlignment="CENTER" />
@@ -55,6 +50,11 @@
       <Text layoutX="62.0" layoutY="394.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender" wrappingWidth="71.0546875">
          <font>
             <Font size="16.0" />
+         </font>
+      </Text>
+      <Text layoutX="266.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registration Form">
+         <font>
+            <Font name="System Bold" size="36.0" />
          </font>
       </Text>
    </children>
