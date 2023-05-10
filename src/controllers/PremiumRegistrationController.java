@@ -70,6 +70,7 @@ public class PremiumRegistrationController extends BasicController {
         timeline.play();
     }
 
+    @Override
     public void setTitle() {
         stage.setTitle("Premium registration");
     }
