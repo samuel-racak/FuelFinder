@@ -37,6 +37,7 @@ public class LoginController extends BasicController {
         // TODO handle login
     }
 
+    @FXML
     public void register(ActionEvent event) {
         System.out.println("user wants to register");
         sceneManager.switchToScene("register");
