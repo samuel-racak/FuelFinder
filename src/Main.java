@@ -3,9 +3,9 @@ import java.util.Optional;
 import controllers.SceneManager;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+// import javafx.fxml.FXMLLoader;
+// import javafx.scene.Parent;
+// import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
@@ -21,8 +21,10 @@ public class Main extends Application {
         // sceneManager.addScene("register", "register.fxml");
         sceneManager.addScene("register", "register.fxml");
         sceneManager.addScene("premium", "registerPremium.fxml");
-        sceneManager.switchToScene("login");
+        sceneManager.addScene("main", "mainWindow.fxml");
+        // sceneManager.switchToScene("login");
         // sceneManager.switchToScene("register");
+        sceneManager.switchToScene("main");
 
         // Parent root =
         // FXMLLoader.load(getClass().getResource("/resources/login.fxml"));
