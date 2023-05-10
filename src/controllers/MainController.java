@@ -9,6 +9,7 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 
 public class MainController extends BasicController {
@@ -46,6 +47,15 @@ public class MainController extends BasicController {
     private Label userNameLabel;
 
     @FXML
+    private GridPane gridPane;
+
+    @FXML
+    private Label nameField;
+
+    @FXML
+    private Label Field;
+
+    @FXML
     void initialize() {
         // Create a Circle with the desired radius
         // choose either imageView.getFitWidth() or imageView.getFitHeight() depending
@@ -61,18 +71,22 @@ public class MainController extends BasicController {
         // Set the clip property of the ImageView to the Circle
         imageView.setClip(clip);
 
-        // Create a ListView to display the list of String values
-        ListView<String> listView = new ListView<>();
-
-        // Add the String values to the ListView
-        listView.getItems().addAll("Item 1", "Item 2", "Item 3");
-
-        listOfLocations.setItems(listView.getItems());
+        listOfLocations.getItems().addAll("Item 1", "Item 2", "Item 3");
 
         // Add a listener to the selectedItem property of the ListView
-        listView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        listOfLocations.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             // This code will be executed whenever the user selects an item in the ListView
             System.out.println("Selected item: " + newValue);
+            if (newValue != null) {
+                // nameField.setText(newValue.getName());
+                // addressField.setText(newValue.getAddress());
+                // ratingField.setText(String.valueOf(newValue.getRating()));
+            } else {
+                // nameField.clear();
+                // addressField.clear();
+                // ratingField.clear();
+            }
+
         });
     }
 
