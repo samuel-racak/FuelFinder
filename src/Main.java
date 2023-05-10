@@ -22,6 +22,7 @@ public class Main extends Application {
         sceneManager.addScene("register", "register.fxml");
         sceneManager.addScene("premium", "registerPremium.fxml");
         sceneManager.addScene("main", "mainWindow.fxml");
+        sceneManager.addScene("settings", "settings.fxml");
         // sceneManager.switchToScene("login");
         // sceneManager.switchToScene("register");
         sceneManager.switchToScene("main");
