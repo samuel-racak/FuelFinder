@@ -19,6 +19,7 @@ public class LoginController extends BasicController {
     @FXML
     private PasswordField passwordTextField;
 
+    @Override
     public void setTitle() {
         stage.setTitle("Login");
     }
