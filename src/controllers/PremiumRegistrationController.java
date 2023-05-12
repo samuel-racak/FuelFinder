@@ -68,11 +68,6 @@ public class PremiumRegistrationController extends BasicController {
         timeline.play();
     }
 
-    @Override
-    public void setTitle() {
-        stage.setTitle("Premium registration");
-    }
-
     @FXML
     private void checkCardDetails(ActionEvent event) {
         System.out.println("checking card details");
@@ -92,5 +87,10 @@ public class PremiumRegistrationController extends BasicController {
         windowManager.switchToScene("primaryStage", "loginScene");
 
         // TODO add user and go to other scene
+    }
+
+    @Override
+    public void setTitle() {
+        stage.setTitle("Premium registration");
     }
 }

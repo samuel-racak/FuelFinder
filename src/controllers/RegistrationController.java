@@ -60,11 +60,6 @@ public class RegistrationController extends BasicController {
         timeline.play();
     }
 
-    @Override
-    public void setTitle() {
-        stage.setTitle("Registration");
-    }
-
     @FXML
     private void createUser(ActionEvent event) {
         System.out.println("Registration controller");
@@ -83,5 +78,10 @@ public class RegistrationController extends BasicController {
         System.out.println("user wants to go premium");
         windowManager.switchToScene("primaryStage", "premiumScene");
         // TODO save user details and go to other scene
+    }
+
+    @Override
+    public void setTitle() {
+        stage.setTitle("Registration");
     }
 }
