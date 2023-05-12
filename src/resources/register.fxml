@@ -18,12 +18,15 @@
          </image>
       </ImageView>
       <TextField fx:id="userNameTextField" layoutX="170.0" layoutY="157.0" prefHeight="37.0" prefWidth="205.0" promptText="insert your username" />
+      <TextField fx:id="userEmailTextField" layoutX="170.0" layoutY="208.0" prefHeight="37.0" prefWidth="205.0" promptText="insert your email" />
       <PasswordField fx:id="passwordTextField" layoutX="170.0" layoutY="262.0" prefHeight="37.0" prefWidth="205.0" promptText="insert password" />
-      <Button fx:id="loginButton" layoutX="221.0" layoutY="481.0" mnemonicParsing="false" onAction="#createUser" prefHeight="37.0" prefWidth="103.0" text="Login" textAlignment="CENTER" />
+      <DatePicker fx:id="dateOfBirthPicker" layoutX="170.0" layoutY="315.0" prefHeight="37.0" prefWidth="205.0" promptText="choose the date of birth" />
+      <TextField fx:id="userGenderTextField" layoutX="170.0" layoutY="370.0" prefHeight="37.0" prefWidth="205.0" promptText="insert your gender" />
       <Button fx:id="goPremiumButton" layoutX="211.0" layoutY="429.0" mnemonicParsing="false" onAction="#goPremium" prefHeight="37.0" prefWidth="124.0" text="Go premium">
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Button>
+      <Button fx:id="loginButton" layoutX="221.0" layoutY="481.0" mnemonicParsing="false" onAction="#createUser" prefHeight="37.0" prefWidth="103.0" text="Login" textAlignment="CENTER" />
       <Text layoutX="60.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
          <font>
             <Font size="16.0" />
@@ -34,8 +37,6 @@
             <Font size="16.0" />
          </font>
       </Text>
-      <TextField fx:id="userEmailTextField" layoutX="170.0" layoutY="208.0" prefHeight="37.0" prefWidth="205.0" promptText="insert your email" />
-      <DatePicker fx:id="dateOfBirthPicker" layoutX="170.0" layoutY="315.0" prefHeight="37.0" prefWidth="205.0" promptText="choose the date of birth" />
       <Text layoutX="65.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="66.6015625">
          <font>
             <Font size="16.0" />
@@ -46,7 +47,6 @@
             <Font size="16.0" />
          </font>
       </Text>
-      <TextField fx:id="userGenderTextField" layoutX="170.0" layoutY="370.0" prefHeight="37.0" prefWidth="205.0" promptText="insert your gender" />
       <Text layoutX="62.0" layoutY="394.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender" wrappingWidth="71.0546875">
          <font>
             <Font size="16.0" />
