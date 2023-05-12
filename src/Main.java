@@ -16,18 +16,19 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        WindowManager sceneManager = new WindowManager(primaryStage);
-        sceneManager.addScene("login", "login.fxml");
-        // sceneManager.addScene("register", "register.fxml");
-        sceneManager.addScene("register", "register.fxml");
-        sceneManager.addScene("premium", "registerPremium.fxml");
-        sceneManager.addScene("main", "mainWindow.fxml");
-        sceneManager.addScene("settings", "settings.fxml");
-        sceneManager.addScene("carForm", "car.fxml"); // used to setup a new car
-        // sceneManager.switchToScene("login");
-        // sceneManager.switchToScene("register");
-        sceneManager.switchToScene("main");
-        // sceneManager.switchToScene("carForm");
+        WindowManager windowManager = new WindowManager(primaryStage);
+        windowManager.addStage("primaryStage", primaryStage);
+        windowManager.addScene("loginScene", "login.fxml");
+        windowManager.addScene("registerScene", "register.fxml");
+        windowManager.addScene("premiumScene", "registerPremium.fxml");
+        windowManager.addScene("mainScene", "mainWindow.fxml");
+        windowManager.addScene("settingsScene", "settings.fxml");
+        windowManager.addScene("carScene", "car.fxml"); // used to setup a new car
+        windowManager.addScene("premiumUpgradeScene", "goPremium.fxml");
+
+        // windowManager.switchToScene("primaryStage", "loginScene");
+        windowManager.switchToScene("primaryStage", "mainScene");
+        // windowManager.switchToScene("primaryStage", "premiumUpgradeScene");
 
         // Parent root =
         // FXMLLoader.load(getClass().getResource("/resources/login.fxml"));
