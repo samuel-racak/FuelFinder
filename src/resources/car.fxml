@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="357.0" prefWidth="214.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="resources.carController">
+ <Label text="Year:" />
+ <TextField fx:id="yearField" />
+ <Label text="License Number:" />
+ <TextField fx:id="licenseNumberField" />
+ <Label text="Model:" />
+ <TextField fx:id="modelField" />
+ <Label text="Fuel Type:" />
+ <ComboBox fx:id="fuelTypeBox" />
+ <Label text="Fuel Consumption:" />
+ <TextField fx:id="fuelConsumptionField" />
+ <Label text="Maximum Range:" />
+ <TextField fx:id="maximumRangeField" />
+ <Label text="Current Fuel Level:" />
+ <TextField fx:id="currentFuelLevelField" />
+ <Button onAction="#handleSubmitButtonAction" prefHeight="73.0" prefWidth="279.0" text="Submit">
+      <font>
+         <Font name="System Bold" size="16.0" />
+      </font></Button>
+</VBox>
