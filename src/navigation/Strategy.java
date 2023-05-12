@@ -11,10 +11,10 @@ import location.Route;
 public interface Strategy {
     /**
      * tries to find Route between two given points
-     * 
+     *
      * @param start  starting point
      * @param finish ending point
      * @return a route from start to finish
      */
-    public Route findRoute(Point start, Point finish);
+    Route findRoute(Point start, Point finish);
 }
