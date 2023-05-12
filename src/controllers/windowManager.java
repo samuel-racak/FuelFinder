@@ -12,25 +12,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 // this class will be responsible for managing the scenes and controllers
-public class SceneManager {
-    private Stage stage;
+public class WindowManager {
+    private Map<String, Stage> stages = new HashMap<>();
     private Map<String, Scene> scenes = new HashMap<>();
     private Map<String, ? extends BasicController> controllers = new HashMap<>();
-    private static SceneManager instance;
+    private static WindowManager instance;
 
-    public SceneManager(Stage stage) {
-        this.stage = stage;
+    public WindowManager(Stage stage) {
+        // this.stage = stage;
     }
 
-    public static SceneManager getInstance() {
+    public static WindowManager getInstance() {
         if (instance == null) {
-            instance = new SceneManager(new Stage());
+            instance = new WindowManager(new Stage());
         }
         return instance;
     }
 
-    public Stage getStage() {
-        return stage;
+    public void addStage(String name, Stage stage) {
+        stages.put(name, stage);
     }
 
     public void addScene(String name, String fxmlFile) {
@@ -39,7 +39,7 @@ public class SceneManager {
             Parent root = loader.load();
             BasicController controller = loader.getController();
             controller.setSceneManager(this);
-            controller.setStage(stage);
+            // controller.setStage(stage);
             controller.setTitle();
             Scene scene = new Scene(root);
             scenes.put(name, scene);
@@ -49,16 +49,17 @@ public class SceneManager {
         }
     }
 
-    public void switchToScene(String name) {
+    public void switchToScene(String stageName, String sceneName) {
 
-        Scene scene = scenes.get(name);
-        BasicController controller = controllers.get(name);
+        Scene scene = scenes.get(sceneName);
+        Stage stage = stages.get(stageName);
+
+        BasicController controller = controllers.get(sceneName);
         if (controller != null) {
             controller.setTitle();
         }
 
-        if (scene != null) {
-
+        if (scene != null && stage != null) {
             // create a fade out transition
             FadeTransition fadeOut = new FadeTransition(Duration.millis(500), scene.getRoot());
             fadeOut.setFromValue(1);
@@ -72,12 +73,21 @@ public class SceneManager {
 
             // when fade out transition is finished, switch to the new scene
             fadeOut.setOnFinished(event -> {
-                System.out.println("switching to scene: " + name);
+                System.out.println("switching to scene: " + sceneName);
                 stage.setScene(scene);
                 stage.show();
                 fadeIn.play();
             });
         }
+    }
+
+    // returns primary stage
+    public Stage getStage(String name) {
+        return stages.get(name);
+    }
+
+    public <T extends Scene> T getScene(String name) {
+        return (T) scenes.get(name);
     }
 
     public <T extends BasicController> T getController(String name) {
