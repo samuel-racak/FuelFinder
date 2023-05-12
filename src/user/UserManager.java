@@ -8,6 +8,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import exceptions.noPermissionException;
+
 public class UserManager {
     private static UserManager instance;
     private static List<User> registeredUsers; // could use TreeMap to save users
@@ -23,9 +25,7 @@ public class UserManager {
         return instance;
     }
 
-    // the search could be done in a better way by inserting users into some kind of
-    // a data structure (AVL tree) will maybe add this later
-    public User userExist(String username) {
+    public User getUser(String username) {
         for (User user : registeredUsers) {
             if (user.getName().equals(username)) {
                 return user;
@@ -35,21 +35,69 @@ public class UserManager {
     }
 
     public User registerUser(User in) {
-        User potentialUser = userExist(in.getName());
+        User potentialUser = getUser(in.getName());
 
-        if (potentialUser != null) {
+        if (potentialUser == null) {
             registeredUsers.add(potentialUser);
             // change to next scene with user already logged in
             System.out.println("User registered successfully!");
             return potentialUser;
         } else {
-            // handle the situation
+            // TODO: handle the situation
             System.out.println("Username already taken. Please choose a different username.");
         }
         return null;
     }
 
-    // TODO add more methods for logging user in, deletion of user etc.
+    public User deleteUser(User in, User admin) throws noPermissionException {
+        if (admin.getUserType() != UserType.ADMIN) {
+            throw new noPermissionException();
+        }
+
+        User potentialUser = getUser(in.getName());
+        if (potentialUser != null) {
+            if (potentialUser.getUserType() == UserType.ADMIN) {
+                throw new noPermissionException("Admin cannot other admin.");
+            }
+            registeredUsers.remove(potentialUser);
+            System.out.println("User deleted successfully!");
+            return potentialUser;
+        }
+        return null; // user not found
+    }
+
+    public User changeToPremium(User in, User admin) throws noPermissionException {
+        if (admin.getUserType() != UserType.ADMIN) {
+            throw new noPermissionException();
+        }
+        User potentialUser = getUser(in.getName());
+
+        if (potentialUser != null) {
+            potentialUser.setUserType(UserType.PREMIUM_USER);
+            System.out.println("User changed to premium successfully!");
+            return potentialUser;
+        } else {
+            // TODO: handle the situation
+            System.out.println("User does not exist.");
+        }
+        return null;
+    }
+
+    public User changeToAdmin(User in, User admin) throws noPermissionException {
+        if (admin.getUserType() != UserType.ADMIN) {
+            throw new noPermissionException();
+        }
+        User potentialUser = getUser(in.getName());
+
+        if (potentialUser != null) {
+            potentialUser.setUserType(UserType.ADMIN);
+            return potentialUser;
+        } else {
+            // TODO: handle the situation
+            System.out.println("User does not exist.");
+        }
+        return null;
+    }
 
     public void saveToFile(String filename) {
         try (FileOutputStream fileOut = new FileOutputStream(filename);
