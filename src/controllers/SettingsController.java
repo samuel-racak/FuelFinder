@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
@@ -51,6 +52,9 @@ public class SettingsController extends BasicController {
     private TextField newUserName;
 
     @FXML
+    private ListView<String> carInformationListView;
+
+    @FXML
     void initialize() {
         // Create a Circle with the desired radius
         // choose either imageView.getFitWidth() or imageView.getFitHeight() depending
@@ -65,6 +69,9 @@ public class SettingsController extends BasicController {
 
         // Set the clip property of the ImageView to the Circle
         imageView.setClip(clip);
+
+        carInformationListView.getItems().addAll("Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7");
+
     }
 
     @FXML
