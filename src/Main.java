@@ -1,6 +1,6 @@
 import java.util.Optional;
 
-import controllers.SceneManager;
+import controllers.WindowManager;
 import javafx.application.Application;
 import javafx.application.Platform;
 // import javafx.fxml.FXMLLoader;
@@ -16,16 +16,18 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        SceneManager sceneManager = new SceneManager(primaryStage);
+        WindowManager sceneManager = new WindowManager(primaryStage);
         sceneManager.addScene("login", "login.fxml");
         // sceneManager.addScene("register", "register.fxml");
         sceneManager.addScene("register", "register.fxml");
         sceneManager.addScene("premium", "registerPremium.fxml");
         sceneManager.addScene("main", "mainWindow.fxml");
         sceneManager.addScene("settings", "settings.fxml");
+        sceneManager.addScene("carForm", "car.fxml"); // used to setup a new car
         // sceneManager.switchToScene("login");
         // sceneManager.switchToScene("register");
         sceneManager.switchToScene("main");
+        // sceneManager.switchToScene("carForm");
 
         // Parent root =
         // FXMLLoader.load(getClass().getResource("/resources/login.fxml"));

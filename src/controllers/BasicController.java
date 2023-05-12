@@ -3,10 +3,10 @@ package controllers;
 import javafx.stage.Stage;
 
 public abstract class BasicController {
-    protected SceneManager sceneManager;
+    protected WindowManager sceneManager;
     protected Stage stage;
 
-    public void setSceneManager(SceneManager sceneManager) {
+    public void setSceneManager(WindowManager sceneManager) {
         this.sceneManager = sceneManager;
     }
 
