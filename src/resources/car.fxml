@@ -7,22 +7,43 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="357.0" prefWidth="214.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="resources.carController">
- <Label text="Year:" />
+<VBox prefHeight="385.0" prefWidth="288.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CarController">
+ <Label text="Year:">
+      <font>
+         <Font size="16.0" />
+      </font></Label>
  <TextField fx:id="yearField" />
- <Label text="License Number:" />
+ <Label text="License Number:">
+      <font>
+         <Font size="16.0" />
+      </font></Label>
  <TextField fx:id="licenseNumberField" />
- <Label text="Model:" />
+ <Label text="Model:">
+      <font>
+         <Font size="16.0" />
+      </font></Label>
  <TextField fx:id="modelField" />
- <Label text="Fuel Type:" />
- <ComboBox fx:id="fuelTypeBox" />
- <Label text="Fuel Consumption:" />
+ <Label text="Fuel Type:">
+      <font>
+         <Font size="16.0" />
+      </font></Label>
+ <ComboBox fx:id="fuelTypeBox" prefHeight="25.0" prefWidth="291.0" />
+ <Label text="Fuel Consumption:">
+      <font>
+         <Font size="16.0" />
+      </font></Label>
  <TextField fx:id="fuelConsumptionField" />
- <Label text="Maximum Range:" />
+ <Label text="Maximum Range:">
+      <font>
+         <Font size="16.0" />
+      </font></Label>
  <TextField fx:id="maximumRangeField" />
- <Label text="Current Fuel Level:" />
+ <Label text="Current Fuel Level:">
+      <font>
+         <Font size="16.0" />
+      </font></Label>
  <TextField fx:id="currentFuelLevelField" />
- <Button onAction="#handleSubmitButtonAction" prefHeight="73.0" prefWidth="279.0" text="Submit">
+ <Button onAction="#handleSubmitButtonAction" prefHeight="35.0" prefWidth="301.0" text="Submit">
       <font>
          <Font name="System Bold" size="16.0" />
       </font></Button>
