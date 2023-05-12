@@ -14,15 +14,13 @@ public class LoginController extends BasicController {
     private Button loginButton;
 
     @FXML
+    private Button adminButton;
+
+    @FXML
     private TextField userNameTextField;
 
     @FXML
     private PasswordField passwordTextField;
-
-    @Override
-    public void setTitle() {
-        stage.setTitle("Login");
-    }
 
     @FXML
     public void login(ActionEvent event) {
@@ -42,6 +40,18 @@ public class LoginController extends BasicController {
     public void register(ActionEvent event) {
         System.out.println("user wants to register");
         windowManager.switchToScene("primaryStage", "registerScene");
-        // TODO go to other scene
+    }
+
+    @FXML
+    public void goToAdminPage(ActionEvent event) {
+        System.out.println("user wants to go to admin page");
+        windowManager.switchToScene("primaryStage", "adminScene");
+        // TODO: check if user is admin
+        // windowManager.switchToScene("primaryStage", "adminScene");
+    }
+
+    @Override
+    public void setTitle() {
+        stage.setTitle("Login");
     }
 }
