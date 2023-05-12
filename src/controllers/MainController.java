@@ -98,11 +98,17 @@ public class MainController extends BasicController {
     @FXML
     void logout(ActionEvent event) {
         // TODO: logout
+        sceneManager.switchToScene("login");
     }
 
     @FXML
     void setCurrent(ActionEvent event) {
-        currentLocationLabel.setText(listOfLocations.getSelectionModel().getSelectedItem());
+        String text = listOfLocations.getSelectionModel().getSelectedItem();
+        System.out.println(text);
+        if (text != null) {
+            currentLocationLabel.setText(text);
+        }
+
         // currentLocationLabel.setText("set current location");
     }
 
