@@ -25,18 +25,11 @@ public class Main extends Application {
         windowManager.addScene("settingsScene", "settings.fxml");
         windowManager.addScene("carScene", "car.fxml"); // used to setup a new car
         windowManager.addScene("premiumUpgradeScene", "goPremium.fxml");
+        windowManager.addScene("adminScene", "admin.fxml");
 
-        // windowManager.switchToScene("primaryStage", "loginScene");
-        windowManager.switchToScene("primaryStage", "mainScene");
+        windowManager.switchToScene("primaryStage", "loginScene");
+        // windowManager.switchToScene("primaryStage", "mainScene");
         // windowManager.switchToScene("primaryStage", "premiumUpgradeScene");
-
-        // Parent root =
-        // FXMLLoader.load(getClass().getResource("/resources/login.fxml"));
-        // Scene scene = new Scene(root);
-        // scene.getStylesheets().add(getClass().getResource("/resources/login.css").toExternalForm());
-        // primaryStage.setTitle("login page");
-        // primaryStage.setScene(scene);
-        // primaryStage.show();
 
         primaryStage.setOnCloseRequest(event -> {
             if (confirmLogout(primaryStage)) {
@@ -59,43 +52,14 @@ public class Main extends Application {
         return result.isPresent() && result.get() == ButtonType.OK;
     }
 
-    // private void logout(Stage primaryStage) {
-    // Alert alert = new Alert(AlertType.CONFIRMATION);
-    // alert.setTitle("Logout");
-    // alert.setHeaderText("You will be logged out");
-    // alert.setContentText("Are you sure you want to exit?");
-
-    // if (alert.showAndWait().get() == ButtonType.OK) {
-    // System.out.println("Logging out");
-    // // TODO some work when logging out
-    // primaryStage.close();
-    // }
-
-    /*
-     * private void logout(ActionEvent event) {
-     * Alert alert = new Alert(AlertType.CONFIRMATION);
-     * alert.setTitle("Logout");
-     * alert.setHeaderText("You will be logged out");
-     * alert.setContentText("Are you sure you want to exit?");
-     *
-     * if (alert.showAndWait().get() == ButtonType.OK) {
-     * stage = (Stage) scenePane.getScene().getWindow();
-     * System.out.println("Logging out");
-     * // do some work when logging out
-     * stage.close();
-     * }
-     * }
-     */
-
     @Override
     public void stop() throws Exception {
-        // TODO end methods and safely close application
+        // TODO: end methods and safely close application
         System.out.println("closing application");
         Platform.exit();
     }
 
     public static void main(String[] args) throws Exception {
-        // System.out.println("Hello, World!");
         launch(args);
     }
 }
