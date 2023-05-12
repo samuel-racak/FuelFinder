@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="215.0" prefWidth="333.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PremiumUpgradeController">
+ <Label text="Card Number:">
+      <font>
+         <Font size="16.0" />
+      </font></Label>
+ <TextField fx:id="cardNumberField" />
+ <Label text="Expiration Date:">
+      <font>
+         <Font size="16.0" />
+      </font></Label>
+ <TextField fx:id="expirationDateField" />
+ <Label text="Security Code:">
+      <font>
+         <Font size="16.0" />
+      </font></Label>
+ <TextField fx:id="securityCodeField" />
+ <Button onAction="#handleSubmitButtonAction" prefHeight="65.0" prefWidth="335.0" text="Submit">
+      <font>
+         <Font name="System Bold" size="16.0" />
+      </font></Button>
+</VBox>
