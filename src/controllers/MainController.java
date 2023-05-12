@@ -8,9 +8,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class MainController extends BasicController {
     @FXML
@@ -92,13 +96,25 @@ public class MainController extends BasicController {
 
     @FXML
     void goPremium(ActionEvent event) {
-        // TODO: go to premium upgrade page
+        Stage popUpStage = new Stage();
+        popUpStage.initOwner(stage);
+        popUpStage.initModality(Modality.WINDOW_MODAL);
+        windowManager.addStage("popUpStage", popUpStage);
+        windowManager.switchToScene("popUpStage", "premiumUpgradeScene");
+        windowManager.getScene("premiumUpgradeScene").addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ESCAPE) {
+                System.out.println("ESC1");
+                windowManager.removeStage("popUpStage");
+            }
+        });
+
+        // TODO: set user to premium and check the card
     }
 
     @FXML
     void logout(ActionEvent event) {
         // TODO: logout
-        sceneManager.switchToScene("login");
+        windowManager.switchToScene("primaryStage", "loginScene");
     }
 
     @FXML
@@ -121,7 +137,7 @@ public class MainController extends BasicController {
     @FXML
     void settings(ActionEvent event) {
         // TODO: go to settings page
-        sceneManager.switchToScene("settings");
+        windowManager.switchToScene("primaryStage", "settingsScene");
     }
 
     @FXML
