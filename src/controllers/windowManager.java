@@ -38,9 +38,9 @@ public class WindowManager {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/" + fxmlFile));
             Parent root = loader.load();
             BasicController controller = loader.getController();
-            controller.setSceneManager(this);
-            // controller.setStage(stage);
-            controller.setTitle();
+            controller.setWindowManager(this);
+            controller.setStage(stages.get("primaryStage")); // This is the default stage name
+            // controller.setTitle();
             Scene scene = new Scene(root);
             scenes.put(name, scene);
             controllers.put(name, loader.getController());
@@ -84,6 +84,15 @@ public class WindowManager {
     // returns primary stage
     public Stage getStage(String name) {
         return stages.get(name);
+    }
+
+    public void removeStage(String name) {
+        Stage temp = (Stage) stages.get(name);
+        if (temp != null) {
+            temp.close();
+        }
+
+        stages.remove(name);
     }
 
     public <T extends Scene> T getScene(String name) {

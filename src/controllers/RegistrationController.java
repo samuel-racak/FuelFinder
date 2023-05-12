@@ -73,7 +73,7 @@ public class RegistrationController extends BasicController {
         System.out.println("user email:" + userEmailTextField.getText());
         System.out.println("user password:" + passwordTextField.getText());
         System.out.println("user date of birth:" + dateOfBirthPicker.getValue());
-        sceneManager.switchToScene("login");
+        windowManager.switchToScene("primaryStage", "loginScene");
 
         // TODO add user and go to other scene
     }
@@ -81,7 +81,7 @@ public class RegistrationController extends BasicController {
     @FXML
     private void goPremium(ActionEvent event) {
         System.out.println("user wants to go premium");
-        sceneManager.switchToScene("premium");
+        windowManager.switchToScene("primaryStage", "premiumScene");
         // TODO save user details and go to other scene
     }
 }

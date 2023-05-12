@@ -2,8 +2,6 @@ package controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -13,13 +11,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.security.Key;
 
 public class SettingsController extends BasicController {
 
@@ -75,37 +69,18 @@ public class SettingsController extends BasicController {
 
     @FXML
     void carCreation(ActionEvent event) {
-        sceneManager.switchToScene("carForm");
-        // Stage carStage = sceneManager.getStage("car");
-
-        // try {
-        // // Load the FXML file
-        // FXMLLoader loader = new
-        // FXMLLoader(getClass().getResource("/resources/car.fxml"));
-        // VBox carForm = loader.load();
-
-        // // Create a new stage for the pop-up window
-        // Stage popupStage = new Stage();
-        // popupStage.setTitle("Car Form");
-        // popupStage.initOwner(stage);
-        // popupStage.initModality(Modality.WINDOW_MODAL); // Prevents user from
-        // interacting with other windows
-
-        // // Set the scene of the stage to a new scene containing the car form
-        // Scene scene = new Scene(carForm);
-        // popupStage.setScene(scene);
-
-        // scene.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
-        // if (keyEvent.getCode() == KeyCode.ESCAPE) {
-        // popupStage.close();
-        // }
-        // });
-
-        // // Show the pop-up window
-        // popupStage.show();
-        // } catch (IOException e) {
-        // e.printStackTrace();
-        // }
+        System.out.println("Car Creation");
+        Stage popUpStage = new Stage();
+        popUpStage.initOwner(stage);
+        popUpStage.initModality(Modality.WINDOW_MODAL);
+        windowManager.addStage("popUpStage", popUpStage);
+        windowManager.switchToScene("popUpStage", "carScene");
+        windowManager.getScene("carScene").addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ESCAPE) {
+                System.out.println("ESC");
+                windowManager.removeStage("popUpStage");
+            }
+        });
     }
 
     @FXML
@@ -117,7 +92,8 @@ public class SettingsController extends BasicController {
     @FXML
     void deleteAccount(ActionEvent event) {
         // TODO: delete user and return to login page
-        sceneManager.switchToScene("login");
+        windowManager.switchToScene("primaryStage", "loginScene");
+        // sceneManager.switchToScene("login");
     }
 
     @FXML
@@ -127,18 +103,32 @@ public class SettingsController extends BasicController {
 
     @FXML
     void goBack(ActionEvent event) {
-        sceneManager.switchToScene("main");
+        windowManager.switchToScene("primaryStage", "mainScene");
+        // sceneManager.switchToScene("main");
     }
 
     @FXML
     void goPremium(ActionEvent event) {
+        Stage popUpStage = new Stage();
+        popUpStage.initOwner(stage);
+        popUpStage.initModality(Modality.WINDOW_MODAL);
+        windowManager.addStage("popUpStage", popUpStage);
+        windowManager.switchToScene("popUpStage", "premiumUpgradeScene");
+        windowManager.getScene("premiumUpgradeScene").addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ESCAPE) {
+                System.out.println("ESC1");
+                windowManager.removeStage("popUpStage");
+            }
+        });
+        // windowManager.switchToScene("popUpStage", "premiumUpgradeScene");
+
         // TODO: create new page for user to upgrade to premium
     }
 
     @FXML
     void logout(ActionEvent event) {
         // TODO: update user in UserManager and return to login page
-        sceneManager.switchToScene("login");
+        windowManager.switchToScene("primaryStage", "loginScene");
     }
 
     @FXML
