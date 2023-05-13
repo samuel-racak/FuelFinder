@@ -71,6 +71,9 @@ public class LoginController extends BasicController {
     public void register(ActionEvent event) {
         System.out.println("user wants to register");
         windowManager.switchToScene("primaryStage", "registerScene");
+        // clear text fields
+        userNameTextField.clear();
+        passwordTextField.clear();
     }
 
     @FXML
@@ -88,6 +91,8 @@ public class LoginController extends BasicController {
             if (sessionManager.login(userName, password)) {
                 System.out.println("user logged in");
                 // clear text fields
+                userNameTextField.clear();
+                passwordTextField.clear();
                 if (sessionManager.isAdmin()) {
                     windowManager.switchToScene("primaryStage", "adminScene");
                 } else {
