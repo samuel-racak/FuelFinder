@@ -32,7 +32,11 @@ public class WindowManager {
     }
 
     public void addStage(String name, Stage stage) {
-        stages.put(name, stage);
+        // check if there is already a stage with the same name
+        // if there is an instance use it
+        if (stages.get(name) == null) {
+            stages.put(name, stage);
+        }
     }
 
     public void addScene(String name, String fxmlFile) {
@@ -60,7 +64,7 @@ public class WindowManager {
         BasicController controller = controllers.get(sceneName);
         if (controller != null) {
             controller.setTitle();
-            controller.setUserName();
+            controller.fillGUI();
         }
 
         if (scene != null && stage != null) {
