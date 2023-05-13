@@ -2,10 +2,12 @@ package user;
 
 import java.time.LocalDate;
 
+import car.FuelType;
 import exceptions.noPermissionException;
 import exceptions.userDoesNotExistException;
 import exceptions.userNameTakenException;
 import exceptions.wrongCardDetailsException;
+import location.Location;
 
 public class SessionManager {
     private static SessionManager instance;
@@ -94,7 +96,6 @@ public class SessionManager {
     /**
      * changes the username of the given user if the new username is not taken
      *
-     * @param in User
      * @return true if username changed, false otherwise
      */
     public boolean changeUserName(String newUsername) {
@@ -121,24 +122,13 @@ public class SessionManager {
      * @return
      */
     public boolean registerUser(String userName, String email, String password, LocalDate dateOfBirth, String gender) {
-        // User in = new User(UserType.BASIC_USER, userName, email, password,
-        // dateOfBirth, gender, null); // user will not
-        // have a car
-        // right away
         try {
-            userManager.registerUser(UserType.BASIC_USER, userName, email, password, dateOfBirth, gender, null)
+            userManager.registerUser(UserType.BASIC_USER, userName, email, password, dateOfBirth, gender, null);
         } catch (userNameTakenException e) {
             return false; // user not registered
         }
         session.setCurrentUser(userManager.getUser(userName));
         return true;
-
-        // if (userManager.registerUser(UserType.BASIC_USER, userName, email, password, dateOfBirth, gender,
-        //         null) == null) {
-        //     return false;
-        // }
-        // session.setCurrentUser(userManager.getUser(userName));
-        // return true;
     }
 
     /**
@@ -175,6 +165,20 @@ public class SessionManager {
     }
 
     /**
+     * deletes the currently logged in user
+     *
+     * @return true if user deleted, false otherwise
+     */
+    public boolean deleteUser() {
+        try {
+            userManager.deleteUser(getCurrentUser());
+        } catch (userDoesNotExistException e) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * deletes the given user
      *
      * @param in User to be deleted
@@ -182,22 +186,52 @@ public class SessionManager {
      */
     public boolean deleteUser(User in) {
         try {
-            userManager.deleteUser(in, getCurrentUser());
-            return true;
-        } catch (noPermissionException e) {
-            e.printStackTrace();
-            return false;
+            userManager.deleteUser(in);
         } catch (userDoesNotExistException e) {
             return false;
         }
+        return true;
     }
 
+    /**
+     * deletes the given user if the admin is logged in
+     *
+     * @param in
+     * @param admin
+     * @return
+     * @throws noPermissionException
+     */
     public boolean deleteUser(User in, User admin) throws noPermissionException {
         if (admin.getUserType() != UserType.ADMIN) {
             throw new noPermissionException();
         }
         try {
             userManager.deleteUser(in);
+        } catch (userDoesNotExistException e) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * adds a car to the given user with the given parameters
+     *
+     * @param user
+     * @param year
+     * @param licenseNumber
+     * @param model
+     * @param fuel
+     * @param fuelConsumption
+     * @param maximumRange
+     * @param currentFuelLevel
+     * @param location
+     * @return true if car added, false otherwise
+     */
+    public boolean addCarToUser(int year, String licenseNumber, String model, FuelType fuel,
+            double fuelConsumption, int fuelTankCapacity, int currentFuelLevel, Location location) {
+        try {
+            userManager.addCarToUser(getCurrentUser(), year, licenseNumber, model, fuel, fuelConsumption,
+                    fuelTankCapacity, currentFuelLevel, location);
         } catch (userDoesNotExistException e) {
             return false;
         }
