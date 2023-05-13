@@ -55,7 +55,7 @@ public class AdminController extends BasicController {
     @FXML
     void selectUser(ActionEvent event) {
         if (userList.getSelectionModel().getSelectedItem() != null) {
-            userNameLabel.setText(userList.getSelectionModel().getSelectedItem().getName());
+            userNameLabel.setText(userList.getSelectionModel().getSelectedItem().getUserName());
         }
     }
 
