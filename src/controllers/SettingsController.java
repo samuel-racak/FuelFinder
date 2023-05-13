@@ -1,7 +1,9 @@
 package controllers;
 
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -88,19 +90,47 @@ public class SettingsController extends BasicController {
                 windowManager.removeStage("popUpStage");
             }
         });
+
     }
 
     @FXML
     void changeUsername(ActionEvent event) {
-        // TODO: set the user name in every scene
-        userNameLabel.setText(newUserName.getText());
+        Task<Boolean> changeUsernameTask = new Task<>() {
+            @Override
+            protected Boolean call() {
+                return sessionManager.changeUserName(newUserName.getText());
+            }
+        };
+
+        changeUsernameTask.setOnSucceeded(e -> {
+            if (changeUsernameTask.getValue()) {
+                userNameLabel.setText(newUserName.getText());
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Username already exists");
+                alert.setContentText("Please choose another username");
+                alert.showAndWait();
+            }
+        });
+        Thread thread = new Thread(changeUsernameTask);
+        thread.setDaemon(true);
+        thread.start();
     }
 
     @FXML
     void deleteAccount(ActionEvent event) {
-        // TODO: delete user and return to login page
+        if (sessionManager.deleteUser()) {
+            System.out.println("User deleted");
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("User not deleted maybe does not exist");
+            alert.setContentText("Please choose another username");
+            alert.showAndWait();
+        }
         windowManager.switchToScene("primaryStage", "loginScene");
-        // sceneManager.switchToScene("login");
+        sceneManager.switchToScene("login");
     }
 
     @FXML
@@ -127,8 +157,6 @@ public class SettingsController extends BasicController {
                 windowManager.removeStage("popUpStage");
             }
         });
-        // windowManager.switchToScene("popUpStage", "premiumUpgradeScene");
-
         // TODO: create new page for user to upgrade to premium
     }
 
@@ -151,5 +179,10 @@ public class SettingsController extends BasicController {
     @Override
     public void setTitle() {
         stage.setTitle("Premium registration");
+    }
+
+    @Override
+    public void setUserName() {
+        userNameLabel.setText(sessionManager.getCurrentUsername());
     }
 }
