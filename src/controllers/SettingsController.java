@@ -71,8 +71,8 @@ public class SettingsController extends BasicController {
 
         // Set the clip property of the ImageView to the Circle
         imageView.setClip(clip);
-
-        carInformationListView.getItems().addAll("Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7");
+        // carInformationListView.getItems().addAll("Item 1", "Item 2", "Item 3", "Item
+        // 4", "Item 5", "Item 6", "Item 7");
 
     }
 
@@ -90,7 +90,6 @@ public class SettingsController extends BasicController {
                 windowManager.removeStage("popUpStage");
             }
         });
-
     }
 
     @FXML
@@ -120,28 +119,27 @@ public class SettingsController extends BasicController {
 
     @FXML
     void deleteAccount(ActionEvent event) {
-        if (sessionManager.deleteUser()) {
-            System.out.println("User deleted");
-        } else {
+        if (!sessionManager.deleteUser()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setHeaderText("User not deleted maybe does not exist");
-            alert.setContentText("Please choose another username");
+            alert.setHeaderText("User not deleted does not exist");
+            alert.setContentText("You cannot delete a user that does not exist or is an admin");
             alert.showAndWait();
+        } else {
+            windowManager.switchToScene("primaryStage", "loginScene");
         }
-        windowManager.switchToScene("primaryStage", "loginScene");
-        sceneManager.switchToScene("login");
     }
 
     @FXML
     void generateRandomCar(ActionEvent event) {
-        // TODO: generate random car and add it to user
+        // TODO: generate random car
+        // sessionManager.generateRandomCar(sessionManager.getCurrentUser()); // This
+        // will generate a random car and add it to the user
     }
 
     @FXML
     void goBack(ActionEvent event) {
         windowManager.switchToScene("primaryStage", "mainScene");
-        // sceneManager.switchToScene("main");
     }
 
     @FXML
@@ -162,7 +160,6 @@ public class SettingsController extends BasicController {
 
     @FXML
     void logout(ActionEvent event) {
-        // TODO: update user in UserManager and return to login page
         windowManager.switchToScene("primaryStage", "loginScene");
     }
 
@@ -182,7 +179,11 @@ public class SettingsController extends BasicController {
     }
 
     @Override
-    public void setUserName() {
+    public void fillGUI() {
         userNameLabel.setText(sessionManager.getCurrentUsername());
+        carInformationListView.getItems().clear();
+        if (sessionManager.getCurrentUser().getCar() != null) {
+            carInformationListView.getItems().addAll(sessionManager.getCurrentUser().getCar().toString());
+        }
     }
 }

@@ -1,9 +1,9 @@
 package controllers;
 
-// import car.Car;
 import car.FuelType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -13,18 +13,27 @@ import javafx.stage.Stage;
 public class CarController extends BasicController {
     @FXML
     private TextField yearField;
+
     @FXML
     private TextField licenseNumberField;
+
     @FXML
     private TextField modelField;
+
     @FXML
     private ComboBox<FuelType> fuelTypeBox;
+
     @FXML
     private TextField fuelConsumptionField;
+
     @FXML
-    private TextField maximumRangeField;
+    private TextField fuelTankCapacityField;
+
     @FXML
     private TextField currentFuelLevelField;
+
+    @FXML
+    private Button submitButton;
 
     @FXML
     public void initialize() {
@@ -51,7 +60,7 @@ public class CarController extends BasicController {
                 modelField.getText().isEmpty() ||
                 fuelTypeBox.getValue() == null ||
                 fuelConsumptionField.getText().isEmpty() ||
-                maximumRangeField.getText().isEmpty() ||
+                fuelTankCapacityField.getText().isEmpty() ||
                 currentFuelLevelField.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -66,12 +75,18 @@ public class CarController extends BasicController {
         String model = modelField.getText();
         FuelType fuelType = fuelTypeBox.getValue();
         double fuelConsumption = Double.parseDouble(fuelConsumptionField.getText());
-        int maximumRange = Integer.parseInt(maximumRangeField.getText());
+        int maximumRange = Integer.parseInt(fuelTankCapacityField.getText());
         int currentFuelLevel = Integer.parseInt(currentFuelLevelField.getText());
 
-        // Create a new Car object with the entered values
-        // Car car = new Car(year, licenseNumber, model, fuelType, fuelConsumption,
-        // maximumRange, currentFuelLevel);
+        // add the car to current user
+        sessionManager.addCarToUser(
+                year,
+                licenseNumber,
+                model,
+                fuelType,
+                fuelConsumption,
+                maximumRange,
+                currentFuelLevel, null);
 
         // print all values
         System.out.println("Year: " + year);
@@ -84,10 +99,9 @@ public class CarController extends BasicController {
 
         System.out.println("Car created!");
 
-        // TODO: Do something with the created Car object
-
         Stage stage = (Stage) yearField.getScene().getWindow(); // get the current stage
         stage.close(); // close the current window
+        windowManager.getController("settingsScene").fillGUI();
     }
 
     @Override

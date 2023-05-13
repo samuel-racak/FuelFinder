@@ -23,7 +23,7 @@ public abstract class BasicController {
 
     public abstract void setTitle();
 
-    public void setUserName() {
+    public void fillGUI() {
         ;
     }
 }

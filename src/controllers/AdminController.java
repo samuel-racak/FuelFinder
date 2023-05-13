@@ -87,7 +87,7 @@ public class AdminController extends BasicController {
     }
 
     @Override
-    public void setUserName() {
+    public void fillGUI() {
         userNameLabel.setText(sessionManager.getCurrentUsername());
     }
 }
