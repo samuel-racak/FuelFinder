@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import user.SessionManager;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -18,13 +19,14 @@ public class WindowManager {
     private Map<String, ? extends BasicController> controllers = new HashMap<>();
     private static WindowManager instance;
 
-    public WindowManager(Stage stage) {
-        // this.stage = stage;
-    }
+    // public WindowManager(Stage stage) {
+    // // this.stage = stage;
+    // }
 
     public static WindowManager getInstance() {
         if (instance == null) {
-            instance = new WindowManager(new Stage());
+            // instance = new WindowManager(new Stage());
+            instance = new WindowManager();
         }
         return instance;
     }
@@ -39,6 +41,7 @@ public class WindowManager {
             Parent root = loader.load();
             BasicController controller = loader.getController();
             controller.setWindowManager(this);
+            controller.setSessionManager(SessionManager.getInstance()); // This is the default session manager
             controller.setStage(stages.get("primaryStage")); // This is the default stage name
             // controller.setTitle();
             Scene scene = new Scene(root);
@@ -57,6 +60,7 @@ public class WindowManager {
         BasicController controller = controllers.get(sceneName);
         if (controller != null) {
             controller.setTitle();
+            controller.setUserName();
         }
 
         if (scene != null && stage != null) {
