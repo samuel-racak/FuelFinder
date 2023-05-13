@@ -1,18 +1,21 @@
 package user;
 
+import exceptions.wrongCardDetailsException;
+
 public class PaymentCard {
     private String cardNumber;
     private String expirationDate;
     private String securityCode;
 
-    public PaymentCard(String cardNumber, String expirationDate, String securityCode) {
+    public PaymentCard(String cardNumber, String expirationDate, String securityCode) throws wrongCardDetailsException {
         if (isValid(cardNumber)) {
             this.cardNumber = cardNumber;
             this.expirationDate = expirationDate;
             this.securityCode = securityCode;
         } else {
             // TODO handle this situation
-            System.out.print("wrong security code");
+            System.out.print("wrong card number");
+            throw new wrongCardDetailsException();
         }
     }
 

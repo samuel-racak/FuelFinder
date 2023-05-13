@@ -1,12 +1,14 @@
 package location;
 
+import java.io.Serializable;
+
 // Todo: rename: maxSpeed -> speedLimit
 // Todo: rename: length -> distance
 // Todo: rename: start -> from
 // Todo: rename: finish -> to
 // Todo: rename: Class to Line
 
-public class Route {
+public class Route implements Serializable {
     private int length;
     private Point start;
     private Point finish;

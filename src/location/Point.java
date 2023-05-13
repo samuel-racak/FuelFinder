@@ -1,8 +1,9 @@
 package location;
 
+import java.io.Serializable;
 import java.util.List;
 
-public abstract class Point {
+public abstract class Point implements Serializable {
     private String name;
     private List<Point> successors; // points one route away from this point
 

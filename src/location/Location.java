@@ -1,7 +1,9 @@
 package location;
 
+import java.io.Serializable;
+
 // this class will remember on which route we are and what is our actual position which will be calculated from the length of the route
-public class Location {
+public class Location implements Serializable {
     private Route currentRoute;
     private int exactKilometer;
 

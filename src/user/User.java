@@ -1,13 +1,14 @@
 package user;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import car.Car;
 
-public class User implements Comparable<User> {
+public class User implements Comparable<User>, Serializable {
 
     private UserType userType; // this indicates that user is not admin
-    private String name;
+    private String userName;
     private String email;
     private String password;
     private LocalDate dateOfBirth;
@@ -28,7 +29,7 @@ public class User implements Comparable<User> {
     public User(UserType userType, String name, String email, String password, LocalDate dataOfBirth, String gender,
             Car car) {
         this.userType = userType;
-        this.name = name;
+        this.userName = name;
         this.email = email;
         this.password = password;
         this.dateOfBirth = dateOfBirth;
@@ -44,12 +45,12 @@ public class User implements Comparable<User> {
         this.userType = userType;
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String name) {
+        this.userName = name;
     }
 
     public String getEmail() {
@@ -94,6 +95,7 @@ public class User implements Comparable<User> {
 
     @Override
     public int compareTo(User other) {
-        return this.name.compareTo(other.getName());
+        return this.userName.compareTo(other.getUserName());
     }
+
 }

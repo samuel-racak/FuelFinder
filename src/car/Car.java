@@ -1,9 +1,11 @@
 package car;
 
 import location.Location;
+
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Car {
+public class Car implements Serializable {
     private int year;
     private String licenseNumber;
     private String model;
