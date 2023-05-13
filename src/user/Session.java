@@ -9,18 +9,18 @@ public class Session {
         currentUser = null;
     }
 
-    public static Session getInstance() {
+    public static synchronized Session getInstance() {
         if (instance == null) {
             instance = new Session();
         }
         return instance;
     }
 
-    public static void setCurrentUser(User user) {
+    public synchronized void setCurrentUser(User user) {
         currentUser = user;
     }
 
-    public static User getCurrentUser() {
+    public User getCurrentUser() {
         return currentUser;
     }
 }
