@@ -11,13 +11,16 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import user.UserManager;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        WindowManager windowManager = new WindowManager(primaryStage);
+        // WindowManager windowManager = new WindowManager(primaryStage);
+        WindowManager windowManager = new WindowManager();
         windowManager.addStage("primaryStage", primaryStage);
+
         windowManager.addScene("loginScene", "login.fxml");
         windowManager.addScene("registerScene", "register.fxml");
         windowManager.addScene("premiumScene", "registerPremium.fxml");
@@ -55,7 +58,8 @@ public class Main extends Application {
     @Override
     public void stop() throws Exception {
         // TODO: end methods and safely close application
-        System.out.println("closing application");
+        System.out.println("closing application and saving users to file");
+        UserManager.getInstance().saveToFile("src/resources/users.ser"); // save the users to file
         Platform.exit();
     }
 
