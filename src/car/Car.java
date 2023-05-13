@@ -11,7 +11,7 @@ public class Car implements Serializable {
     private String model;
     private FuelType fuel;
     private double fuelConsumption; // in energy e.g. l/100km or watts...
-    private int maximumRange; // maximum fuel capacity
+    private int fuelTankCapacity; // maximum fuel capacity
     private int currentFuelLevel; // in percentage
     // TODO create new class of vehicle
     private Location location;
@@ -19,14 +19,14 @@ public class Car implements Serializable {
     public Car() {
     }
 
-    public Car(int year, String licenseNumber, String model, FuelType fuel, double fuelConsumption, int maximumRange,
-            int currentFuelLevel, Location location) {
+    public Car(int year, String licenseNumber, String model, FuelType fuel, double fuelConsumption,
+            int fuelTankCapacity, int currentFuelLevel, Location location) {
         this.year = year;
         this.licenseNumber = licenseNumber;
         this.model = model;
         this.fuel = fuel;
         this.fuelConsumption = fuelConsumption;
-        this.maximumRange = maximumRange;
+        this.fuelTankCapacity = fuelTankCapacity;
         this.currentFuelLevel = currentFuelLevel;
         this.location = location;
     }
@@ -71,12 +71,12 @@ public class Car implements Serializable {
         this.fuelConsumption = fuelConsumption;
     }
 
-    public int getMaximumRange() {
-        return this.maximumRange;
+    public int getFuelTankCapacity() {
+        return this.fuelTankCapacity;
     }
 
-    public void setMaximumRange(int maximumRange) {
-        this.maximumRange = maximumRange;
+    public void setFuelTankCapacity(int maximumRange) {
+        this.fuelTankCapacity = maximumRange;
     }
 
     public int getCurrentFuelLevel() {
@@ -121,7 +121,7 @@ public class Car implements Serializable {
     }
 
     public Car maximumRange(int maximumRange) {
-        setMaximumRange(maximumRange);
+        setFuelTankCapacity(maximumRange);
         return this;
     }
 
@@ -145,27 +145,25 @@ public class Car implements Serializable {
         Car car = (Car) o;
         return year == car.year && Objects.equals(licenseNumber, car.licenseNumber) && Objects.equals(model, car.model)
                 && Objects.equals(fuel, car.fuel) && fuelConsumption == car.fuelConsumption
-                && maximumRange == car.maximumRange && currentFuelLevel == car.currentFuelLevel
+                && fuelTankCapacity == car.fuelTankCapacity && currentFuelLevel == car.currentFuelLevel
                 && Objects.equals(location, car.location);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(year, licenseNumber, model, fuel, fuelConsumption, maximumRange, currentFuelLevel,
+        return Objects.hash(year, licenseNumber, model, fuel, fuelConsumption, fuelTankCapacity, currentFuelLevel,
                 location);
     }
 
     @Override
     public String toString() {
-        return "{" +
-                " year='" + getYear() + "'" +
-                ", licenseNumber='" + getLicenseNumber() + "'" +
-                ", model='" + getModel() + "'" +
-                ", fuel='" + getFuel() + "'" +
-                ", fuelConsumption='" + getFuelConsumption() + "'" +
-                ", maximumRange='" + getMaximumRange() + "'" +
-                ", currentFuelLevel='" + getCurrentFuelLevel() + "'" +
-                ", location='" + getLocation() + "'" +
-                "}";
+        return "Year: " + getYear() + "\n" +
+                "License Number: " + getLicenseNumber() + "\n" +
+                "Model: " + getModel() + "\n" +
+                "Fuel: " + getFuel() + "\n" +
+                "Fuel Consumption: " + getFuelConsumption() + "\n" +
+                "Maximum Range: " + getFuelTankCapacity() + "\n" +
+                "Current Fuel Level: " + getCurrentFuelLevel() + "\n" +
+                "Location: " + getLocation();
     }
 }
