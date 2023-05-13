@@ -1,18 +1,18 @@
 package user;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.URL;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
 import car.Car;
 import exceptions.noPermissionException;
+import exceptions.userDoesNotExistException;
+import exceptions.userNameTakenException;
 
 public class UserManager {
     private static UserManager instance;
@@ -55,9 +55,10 @@ public class UserManager {
      * @param gender
      * @param car
      * @return the registered user or null if the username is already taken
+     * @throws userNameTakenException
      */
     public User registerUser(UserType userType, String userName, String email, String password, LocalDate dataOfBirth,
-            String gender, Car car) {
+            String gender, Car car) throws userNameTakenException {
 
         User potentialUser = getUser(userName);
 
@@ -68,13 +69,11 @@ public class UserManager {
             return registeredUsers.get(userName);
         }
 
-        // TODO: handle the situation
-        System.out.println("Username already taken. Please choose a different username.");
-        return null;
+        throw new userNameTakenException("Username already taken. Please choose a different username.");
     }
 
     public User registerPremiumUser(UserType userType, String userName, String email, String password,
-            LocalDate dataOfBirth, String gender, Car car, PaymentCard card) {
+            LocalDate dataOfBirth, String gender, Car car, PaymentCard card) throws userNameTakenException {
         User potentialUser = getUser(userName);
 
         if (potentialUser == null) {
@@ -84,12 +83,11 @@ public class UserManager {
             System.out.println("User registered successfully!");
             return registeredUsers.get(userName);
         }
-        // TODO: handle the situation
-        System.out.println("Username already taken. Please choose a different username.");
-        return null;
+
+        throw new userNameTakenException("Username already taken. Please choose a different username.");
     }
 
-    public User deleteUser(User in, User admin) throws noPermissionException {
+    public User deleteUser(User in, User admin) throws noPermissionException, userDoesNotExistException {
         if (admin.getUserType() != UserType.ADMIN) {
             throw new noPermissionException();
         }
@@ -103,10 +101,39 @@ public class UserManager {
             System.out.println("User deleted successfully!");
             return potentialUser;
         }
-        return null; // user not found
+
+        throw new userDoesNotExistException("User does not exist.");
     }
 
-    public User changeToPremium(User in, User admin) throws noPermissionException {
+    public User changeUserName(User in, String newUserName) throws userDoesNotExistException, userNameTakenException {
+        User potentialUser = getUser(in.getUserName());
+        registeredUsers.remove(in.getUserName());
+
+        if (potentialUser != null && getUser(newUserName) == null) {
+            potentialUser.setUserName(newUserName);
+            registeredUsers.put(newUserName, potentialUser);
+            System.out.println("Username changed successfully!");
+            return potentialUser;
+        } else if (potentialUser != null) {
+            throw new userDoesNotExistException("User does not exist");
+        }
+
+        throw new userNameTakenException("Username already taken. Please choose a different username.");
+    }
+
+    public User changeToPremium(User in) throws userDoesNotExistException {
+        User potentialUser = getUser(in.getUserName());
+
+        if (potentialUser != null) {
+            potentialUser.setUserType(UserType.PREMIUM_USER);
+            System.out.println("User changed to premium successfully!");
+            return potentialUser;
+        }
+
+        throw new userDoesNotExistException("User does not exist.");
+    }
+
+    public User changeToPremium(User in, User admin) throws noPermissionException, userDoesNotExistException {
         if (admin.getUserType() != UserType.ADMIN) {
             throw new noPermissionException();
         }
@@ -116,14 +143,12 @@ public class UserManager {
             potentialUser.setUserType(UserType.PREMIUM_USER);
             System.out.println("User changed to premium successfully!");
             return potentialUser;
-        } else {
-            // TODO: handle the situation
-            System.out.println("User does not exist.");
         }
-        return null;
+
+        throw new userDoesNotExistException("User does not exist.");
     }
 
-    public User changeToAdmin(User in, User admin) throws noPermissionException {
+    public User changeToAdmin(User in, User admin) throws noPermissionException, userDoesNotExistException {
         if (admin.getUserType() != UserType.ADMIN) {
             throw new noPermissionException();
         }
@@ -132,12 +157,33 @@ public class UserManager {
         if (potentialUser != null) {
             potentialUser.setUserType(UserType.ADMIN);
             return potentialUser;
-        } else {
-            // TODO: handle the situation
-            System.out.println("User does not exist.");
         }
-        return null;
+
+        throw new userDoesNotExistException("User does not exist.");
     }
+
+    public User deleteUser(User in) throws userDoesNotExistException {
+        User potentialUser = getUser(in.getUserName());
+
+        if (potentialUser != null) {
+            registeredUsers.remove(in.getUserName());
+            System.out.println("User deleted successfully!");
+            return potentialUser;
+        }
+
+        throw new userDoesNotExistException("User does not exist.");
+    }
+
+    // public User deleteUser(User in, User admin) throws userDoesNotExistException,
+    // noPermissionException {
+    // User potentialUser = getUser(in.getUserName());
+    // if (potentialUser.getUserType() == UserType.ADMIN || potentialUser == admin)
+    // {
+    // throw new noPermissionException("Admin cannot delete other admin or
+    // themselves.");
+    // }
+    // deleteUser(in);
+    // }
 
     public void saveToFile(String filename) {
         try (FileOutputStream fileOut = new FileOutputStream(filename);
@@ -163,63 +209,8 @@ public class UserManager {
         return registeredUsers;
     }
 
-    // public void saveToFile(String filename) {
-    // URL resourceUrl = getClass().getResource(filename);
-    // if (resourceUrl != null) {
-    // String filePath = new File(resourceUrl.getFile()).getAbsolutePath();
-    // try (FileOutputStream fileOut = new FileOutputStream(filePath);
-    // ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
-    // out.writeObject(registeredUsers);
-    // } catch (IOException i) {
-    // i.printStackTrace();
-    // }
-    // } else {
-    // System.out.println("File not found: " + filename);
-    // }
-    // }
-
-    // public static Map<String, User> loadFromFile(String filename) {
-    // Map<String, User> registeredUsers = null;
-    // URL resourceUrl = UserManager.class.getResource(filename);
-    // if (resourceUrl != null) {
-    // String filePath = new File(resourceUrl.getFile()).getAbsolutePath();
-    // try (FileInputStream fileIn = new FileInputStream(filePath);
-    // ObjectInputStream in = new ObjectInputStream(fileIn)) {
-    // registeredUsers = (Map<String, User>) in.readObject();
-    // } catch (IOException i) {
-    // i.printStackTrace();
-    // } catch (ClassNotFoundException c) {
-    // System.out.println("User class not found");
-    // c.printStackTrace();
-    // }
-    // } else {
-    // System.out.println("File not found: " + filename);
-    // }
-    // return registeredUsers;
-    // }
-
-    // public void saveToFile(String filename) {
-    // try (FileOutputStream fileOut = new FileOutputStream(filename);
-    // ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
-    // out.writeObject(registeredUsers);
-    // } catch (IOException i) {
-    // i.printStackTrace();
-    // }
-    // }
-
-    // public static Map<String, User> loadFromFile(String filename) {
-    // Map<String, User> registeredUsers = null;
-    // try (FileInputStream fileIn = new FileInputStream(filename);
-    // ObjectInputStream in = new ObjectInputStream(fileIn)) {
-    // registeredUsers = (Map<String, User>) in.readObject();
-
-    // } catch (IOException i) {
-    // i.printStackTrace();
-    // } catch (ClassNotFoundException c) {
-    // System.out.println("User class not found");
-    // c.printStackTrace();
-    // }
-    // return registeredUsers;
-    // }
-
+    // TODO: remove this method
+    public Map<String, User> getRegisteredUsers() {
+        return registeredUsers;
+    }
 }
