@@ -75,13 +75,17 @@ public class MainController extends BasicController {
         // Set the clip property of the ImageView to the Circle
         imageView.setClip(clip);
 
-        listOfLocations.getItems().addAll("Item 1", "Item 2", "Item 3");
+        // TODO: get list of locations from sessionManager
+        listOfLocations.getItems().addAll("Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7",
+                "Item 8", "Item 9", "Item 10", "Item 11", "Item 12", "Item 13", "Item 14", "Item 15", "Item 16",
+                "Item 17", "Item 18", "Item 19", "Item 20", "Item 21", "Item 22", "Item 23", "Item 24", "Item 25",
+                "Item 26", "Item 27", "Item 28", "Item 29", "Item 30", "Item 31", "Item 32", "Item 33", "Item 34");
 
         // Add a listener to the selectedItem property of the ListView
         listOfLocations.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             // This code will be executed whenever the user selects an item in the ListView
-            System.out.println("Selected item: " + newValue);
             if (newValue != null) {
+                System.out.println("Selected item: " + newValue);
                 // nameField.setText(newValue.getName());
                 // addressField.setText(newValue.getAddress());
                 // ratingField.setText(String.valueOf(newValue.getRating()));
@@ -107,36 +111,32 @@ public class MainController extends BasicController {
                 windowManager.removeStage("popUpStage");
             }
         });
-
-        // TODO: set user to premium and check the card
     }
 
     @FXML
     void logout(ActionEvent event) {
-        // TODO: logout
         windowManager.switchToScene("primaryStage", "loginScene");
     }
 
     @FXML
     void setCurrent(ActionEvent event) {
-        String text = listOfLocations.getSelectionModel().getSelectedItem();
-        System.out.println(text);
-        if (text != null) {
-            currentLocationLabel.setText(text);
-        }
+        // TODO: set current location
 
-        // currentLocationLabel.setText("set current location");
+        if (listOfLocations.getSelectionModel().getSelectedItem() != null) {
+            currentLocationLabel.setText(listOfLocations.getSelectionModel().getSelectedItem());
+        }
     }
 
     @FXML
     void setDestination(ActionEvent event) {
-        // destinationLocationLabel.setText("set destination");
-        destinationLocationLabel.setText(listOfLocations.getSelectionModel().getSelectedItem());
+        // TODO: set destination
+        if (listOfLocations.getSelectionModel().getSelectedItem() != null) {
+            destinationLocationLabel.setText(listOfLocations.getSelectionModel().getSelectedItem());
+        }
     }
 
     @FXML
     void settings(ActionEvent event) {
-        // TODO: go to settings page
         windowManager.switchToScene("primaryStage", "settingsScene");
     }
 
@@ -153,5 +153,10 @@ public class MainController extends BasicController {
     @Override
     public void setTitle() {
         stage.setTitle("Main");
+    }
+
+    @Override
+    public void fillGUI() {
+        userNameLabel.setText(sessionManager.getCurrentUsername());
     }
 }
