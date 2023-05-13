@@ -10,9 +10,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import car.Car;
+import car.FuelType;
 import exceptions.noPermissionException;
 import exceptions.userDoesNotExistException;
 import exceptions.userNameTakenException;
+import location.Location;
 
 public class UserManager {
     private static UserManager instance;
@@ -85,6 +87,17 @@ public class UserManager {
         }
 
         throw new userNameTakenException("Username already taken. Please choose a different username.");
+    }
+
+    public User deleteUser(User in) throws userDoesNotExistException {
+        User potentialUser = getUser(in.getUserName());
+        if (potentialUser != null) {
+            registeredUsers.remove(in.getUserName());
+            System.out.println("User deleted successfully!");
+            return potentialUser;
+        }
+
+        throw new userDoesNotExistException("User does not exist.");
     }
 
     public User deleteUser(User in, User admin) throws noPermissionException, userDoesNotExistException {
@@ -184,6 +197,21 @@ public class UserManager {
     // }
     // deleteUser(in);
     // }
+
+    public User addCarToUser(User in, int year, String licenseNumber, String model, FuelType fuel,
+            double fuelConsumption, int fuelTankCapacity, int currentFuelLevel, Location location)
+            throws userDoesNotExistException {
+        User potentialUser = getUser(in.getUserName());
+
+        if (potentialUser != null) {
+            potentialUser.setCar(new Car(year, licenseNumber, model, fuel, fuelConsumption, fuelTankCapacity,
+                    currentFuelLevel, location));
+            System.out.println("Car added successfully!");
+            return potentialUser;
+        } else {
+            throw new userDoesNotExistException("User does not exist.");
+        }
+    }
 
     public void saveToFile(String filename) {
         try (FileOutputStream fileOut = new FileOutputStream(filename);
