@@ -85,4 +85,9 @@ public class AdminController extends BasicController {
     public void setTitle() {
         stage.setTitle("Admin");
     }
+
+    @Override
+    public void setUserName() {
+        userNameLabel.setText(sessionManager.getCurrentUsername());
+    }
 }

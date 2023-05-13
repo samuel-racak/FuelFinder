@@ -12,8 +12,6 @@ public abstract class BasicController {
         this.stage = stage;
     }
 
-    public abstract void setTitle();
-
     public void setWindowManager(WindowManager windowManager) {
 
         this.windowManager = windowManager;
@@ -21,5 +19,11 @@ public abstract class BasicController {
 
     public void setSessionManager(SessionManager sessionManager) {
         this.sessionManager = sessionManager;
+    }
+
+    public abstract void setTitle();
+
+    public void setUserName() {
+        ;
     }
 }
