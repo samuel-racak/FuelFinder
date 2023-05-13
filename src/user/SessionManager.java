@@ -2,6 +2,9 @@ package user;
 
 import java.time.LocalDate;
 
+import exceptions.noPermissionException;
+import exceptions.userDoesNotExistException;
+import exceptions.userNameTakenException;
 import exceptions.wrongCardDetailsException;
 
 public class SessionManager {
@@ -89,6 +92,25 @@ public class SessionManager {
     }
 
     /**
+     * changes the username of the given user if the new username is not taken
+     *
+     * @param in User
+     * @return true if username changed, false otherwise
+     */
+    public boolean changeUserName(String newUsername) {
+        try {
+            userManager.changeUserName(getCurrentUser(), newUsername);
+            System.out.println("username: " + getCurrentUser().getUserName());
+            for (User user : userManager.getRegisteredUsers().values()) {
+                System.out.println(user.getUserName());
+            }
+        } catch (userDoesNotExistException | userNameTakenException e) {
+            return false; // username not changed
+        }
+        return true; // username changed
+    }
+
+    /**
      * registers a new user with the given parameters
      *
      * @param userName
@@ -103,12 +125,20 @@ public class SessionManager {
         // dateOfBirth, gender, null); // user will not
         // have a car
         // right away
-        if (userManager.registerUser(UserType.BASIC_USER, userName, email, password, dateOfBirth, gender,
-                null) == null) {
-            return false;
+        try {
+            userManager.registerUser(UserType.BASIC_USER, userName, email, password, dateOfBirth, gender, null)
+        } catch (userNameTakenException e) {
+            return false; // user not registered
         }
         session.setCurrentUser(userManager.getUser(userName));
         return true;
+
+        // if (userManager.registerUser(UserType.BASIC_USER, userName, email, password, dateOfBirth, gender,
+        //         null) == null) {
+        //     return false;
+        // }
+        // session.setCurrentUser(userManager.getUser(userName));
+        // return true;
     }
 
     /**
@@ -122,30 +152,55 @@ public class SessionManager {
      * @param creditCardNumber
      * @param creditCardExpirationDate
      * @param creditCardSecurityCode
-     * @return
      * @throws wrongCardDetailsException
+     * @return true if registration successful, false otherwise
      */
     public boolean registerPremiumUser(String userName, String email, String password, LocalDate dateOfBirth,
             String gender, String creditCardNumber, String creditCardExpirationDate, String creditCardSecurityCode)
             throws wrongCardDetailsException {
 
-        // PremiumUser in = new PremiumUser(UserType.PREMIUM_USER, userName, email,
-        // password, dateOfBirth, gender, null,
-        // new PaymentCard(creditCardNumber, creditCardExpirationDate,
-        // creditCardSecurityCode)); // user will not
-        // have a car
-        // right away
+        // let it throw exception if card details are wrong to handle it in the gui by
+        // showing a message
         PaymentCard card = new PaymentCard(creditCardNumber, creditCardExpirationDate, creditCardSecurityCode);
 
-        if (userManager.registerPremiumUser(UserType.PREMIUM_USER, userName, email, password, dateOfBirth, gender, null,
-                card) == null) {
-            throw new IllegalArgumentException("User already exists");
+        try {
+            userManager.registerPremiumUser(UserType.PREMIUM_USER, userName, email, password, dateOfBirth, gender, null,
+                    card);
+        } catch (userNameTakenException e) {
+            return false; // user not registered
         }
+
         session.setCurrentUser(userManager.getUser(userName));
         return true;
     }
-    // public User deleteUser(User in, User admin) throws noPermissionException {
-    // return userManager.deleteUser(in, admin);
-    // }
 
+    /**
+     * deletes the given user
+     *
+     * @param in User to be deleted
+     * @return true if user deleted, false otherwise
+     */
+    public boolean deleteUser(User in) {
+        try {
+            userManager.deleteUser(in, getCurrentUser());
+            return true;
+        } catch (noPermissionException e) {
+            e.printStackTrace();
+            return false;
+        } catch (userDoesNotExistException e) {
+            return false;
+        }
+    }
+
+    public boolean deleteUser(User in, User admin) throws noPermissionException {
+        if (admin.getUserType() != UserType.ADMIN) {
+            throw new noPermissionException();
+        }
+        try {
+            userManager.deleteUser(in);
+        } catch (userDoesNotExistException e) {
+            return false;
+        }
+        return true;
+    }
 }
