@@ -2,8 +2,10 @@ package controllers;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
@@ -46,15 +48,9 @@ public class RegistrationController extends BasicController {
     @FXML
     public void initialize() {
         imageView.setImage(new Image(IMAGE_LOC + "1.jpg"));
-        // imageView.setImage(new Image(getClass().getResource(IMAGE_LOC +
-        // "1.jpg").toExternalForm()));
-
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(TIME), event -> {
             currentImageIndex = (currentImageIndex + 1) % NUM_IMAGES;
             imageView.setImage(new Image(IMAGE_LOC + (currentImageIndex + 1) + ".jpg"));
-            // imageView.setImage(
-            // new Image(getClass().getResource(IMAGE_LOC + (currentImageIndex + 1) +
-            // ".jpg").toExternalForm()));
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
@@ -62,13 +58,70 @@ public class RegistrationController extends BasicController {
 
     @FXML
     private void createUser(ActionEvent event) {
-        System.out.println("Registration controller");
-        System.out.println("user wants to register");
+        if (userNameTextField.getText().isEmpty() || userEmailTextField.getText().isEmpty()
+                || passwordTextField.getText().isEmpty() || dateOfBirthPicker.getValue() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Registration Error");
+            alert.setContentText("Please enter all fields");
+            alert.showAndWait();
+        } else {
+            Task<Boolean> registerTask = new Task<Boolean>() {
+                @Override
+                protected Boolean call() {
+                    return sessionManager.registerUser(userNameTextField.getText(), userEmailTextField.getText(),
+                            passwordTextField.getText(), dateOfBirthPicker.getValue(),
+                            userGenderTextField.getText());
+                }
+            };
+
+            registerTask.setOnSucceeded(registerEvent -> {
+                if (registerTask.getValue()) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Success");
+                    alert.setHeaderText("Registration Success");
+                    alert.setContentText("User registered successfully");
+                    alert.showAndWait();
+                    windowManager.switchToScene("primaryStage", "loginScene");
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Registration Error");
+                    alert.setContentText("User already exists");
+                    alert.showAndWait();
+                }
+            });
+
+            Thread thread = new Thread(registerTask);
+            thread.setDaemon(true);
+            thread.start();
+
+            /*
+             * if (sessionManager.registerUser(userNameTextField.getText(),
+             * userEmailTextField.getText(),
+             * passwordTextField.getText(), dateOfBirthPicker.getValue(),
+             * userGenderTextField.getText())) {
+             * Alert alert = new Alert(Alert.AlertType.INFORMATION);
+             * alert.setTitle("Success");
+             * alert.setHeaderText("Registration Success");
+             * alert.setContentText("User registered successfully");
+             * alert.showAndWait();
+             * windowManager.switchToScene("primaryStage", "loginScene");
+             * } else {
+             * Alert alert = new Alert(Alert.AlertType.ERROR);
+             * alert.setTitle("Error");
+             * alert.setHeaderText("Registration Error");
+             * alert.setContentText("User already exists");
+             * alert.showAndWait();
+             * }
+             */
+
+        }
+
         System.out.println("user name:" + userNameTextField.getText());
         System.out.println("user email:" + userEmailTextField.getText());
         System.out.println("user password:" + passwordTextField.getText());
         System.out.println("user date of birth:" + dateOfBirthPicker.getValue());
-        windowManager.switchToScene("primaryStage", "loginScene");
 
         // TODO add user and go to other scene
     }
@@ -77,7 +130,6 @@ public class RegistrationController extends BasicController {
     private void goPremium(ActionEvent event) {
         System.out.println("user wants to go premium");
         windowManager.switchToScene("primaryStage", "premiumScene");
-        // TODO save user details and go to other scene
     }
 
     @Override
