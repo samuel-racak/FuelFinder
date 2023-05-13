@@ -26,7 +26,7 @@
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Button>
-      <Button fx:id="loginButton" layoutX="221.0" layoutY="481.0" mnemonicParsing="false" onAction="#createUser" prefHeight="37.0" prefWidth="103.0" text="Register" textAlignment="CENTER" />
+      <Button fx:id="registerButton" layoutX="221.0" layoutY="481.0" mnemonicParsing="false" onAction="#createUser" prefHeight="37.0" prefWidth="103.0" text="Register" textAlignment="CENTER" />
       <Text layoutX="60.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
          <font>
             <Font size="16.0" />
@@ -57,5 +57,6 @@
             <Font name="System Bold" size="36.0" />
          </font>
       </Text>
+      <Button fx:id="goBackButton" layoutX="34.0" layoutY="549.0" mnemonicParsing="false" onAction="#goBack" prefHeight="26.0" prefWidth="146.0" text="&lt;--------- go back" />
    </children>
 </AnchorPane>

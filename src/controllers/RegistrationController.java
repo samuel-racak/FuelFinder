@@ -35,7 +35,10 @@ public class RegistrationController extends BasicController {
     private Button goPremiumButton;
 
     @FXML
-    private Button loginButton;
+    private Button registerButton;
+
+    @FXML
+    private Button goBackButton;
 
     @FXML
     private ImageView imageView;
@@ -95,41 +98,25 @@ public class RegistrationController extends BasicController {
             Thread thread = new Thread(registerTask);
             thread.setDaemon(true);
             thread.start();
-
-            /*
-             * if (sessionManager.registerUser(userNameTextField.getText(),
-             * userEmailTextField.getText(),
-             * passwordTextField.getText(), dateOfBirthPicker.getValue(),
-             * userGenderTextField.getText())) {
-             * Alert alert = new Alert(Alert.AlertType.INFORMATION);
-             * alert.setTitle("Success");
-             * alert.setHeaderText("Registration Success");
-             * alert.setContentText("User registered successfully");
-             * alert.showAndWait();
-             * windowManager.switchToScene("primaryStage", "loginScene");
-             * } else {
-             * Alert alert = new Alert(Alert.AlertType.ERROR);
-             * alert.setTitle("Error");
-             * alert.setHeaderText("Registration Error");
-             * alert.setContentText("User already exists");
-             * alert.showAndWait();
-             * }
-             */
-
         }
 
         System.out.println("user name:" + userNameTextField.getText());
         System.out.println("user email:" + userEmailTextField.getText());
         System.out.println("user password:" + passwordTextField.getText());
         System.out.println("user date of birth:" + dateOfBirthPicker.getValue());
-
-        // TODO add user and go to other scene
+        System.out.println("user gender:" + userGenderTextField.getText());
     }
 
     @FXML
     private void goPremium(ActionEvent event) {
         System.out.println("user wants to go premium");
         windowManager.switchToScene("primaryStage", "premiumScene");
+    }
+
+    @FXML
+    private void goBack(ActionEvent event) {
+        System.out.println("user wants to go back");
+        windowManager.switchToScene("primaryStage", "loginScene");
     }
 
     @Override
