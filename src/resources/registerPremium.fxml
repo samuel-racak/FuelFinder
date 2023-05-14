@@ -22,9 +22,9 @@
       <PasswordField fx:id="passwordTextField" layoutX="170.0" layoutY="262.0" prefHeight="37.0" prefWidth="205.0" promptText="insert password" />
       <DatePicker fx:id="dateOfBirthPicker" layoutX="170.0" layoutY="315.0" prefHeight="37.0" prefWidth="205.0" promptText="choose the date of birth" />
       <TextField fx:id="userGenderTextField" layoutX="170.0" layoutY="370.0" prefHeight="37.0" prefWidth="205.0" promptText="insert your gender" />
-      <TextField fx:id="cardNumber" layoutX="170.0" layoutY="419.0" prefHeight="37.0" prefWidth="205.0" promptText="insert 16 numbers" />
-      <DatePicker fx:id="cardExpirationDate" layoutX="170.0" layoutY="466.0" prefHeight="37.0" prefWidth="124.0" promptText="expiration date" />
-      <TextField fx:id="cardCCV" layoutX="170.0" layoutY="512.0" prefHeight="37.0" prefWidth="124.0" promptText="insert CCV" />
+      <TextField fx:id="cardNumberFiled" layoutX="170.0" layoutY="419.0" prefHeight="37.0" prefWidth="205.0" promptText="insert 16 numbers" />
+      <DatePicker fx:id="cardExpirationDateField" layoutX="170.0" layoutY="466.0" prefHeight="37.0" prefWidth="124.0" promptText="expiration date" />
+      <TextField fx:id="cardCCVField" layoutX="170.0" layoutY="512.0" prefHeight="37.0" prefWidth="124.0" promptText="insert CCV" />
       <Button fx:id="checkCardButton" layoutX="319.0" layoutY="512.0" mnemonicParsing="false" onAction="#checkCardDetails" prefHeight="37.0" prefWidth="112.0" text="Check card details" />
       <Button fx:id="loginButton" layoutX="170.0" layoutY="568.0" mnemonicParsing="false" onAction="#createUser" prefHeight="37.0" prefWidth="103.0" text="Login" textAlignment="CENTER">
          <font>
@@ -65,5 +65,6 @@
             <Font name="System Bold" size="36.0" />
          </font>
       </Text>
+      <Button fx:id="goBackButton" layoutX="18.0" layoutY="579.0" mnemonicParsing="false" onAction="#goBack" prefHeight="26.0" prefWidth="146.0" text="&lt;--------- go back" />
    </children>
 </AnchorPane>

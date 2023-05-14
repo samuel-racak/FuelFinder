@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
@@ -29,19 +30,22 @@ public class PremiumRegistrationController extends BasicController {
     private TextField userGenderTextField;
 
     @FXML
-    private TextField cardNumber;
+    private TextField cardNumberField;
 
     @FXML
     private DatePicker cardExpirationDate;
 
     @FXML
-    private TextField cardCCV;
+    private TextField cardCCVField;
 
     @FXML
     private Button checkCardButton;
 
     @FXML
     private Button loginButton;
+
+    @FXML
+    private Button goBackButton;
 
     @FXML
     private ImageView imageView;
@@ -70,23 +74,66 @@ public class PremiumRegistrationController extends BasicController {
 
     @FXML
     private void checkCardDetails(ActionEvent event) {
+        if (cardNumberField.getText().isEmpty() || cardExpirationDate.getValue() == null
+                || cardCCVField.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Invalid card details");
+            alert.setContentText("Please fill all the fields and try again");
+            alert.showAndWait();
+            return;
+        }
+
+        if (sessionManager.checkCardDetails(cardNumberField.getText(), cardExpirationDate.getValue(),
+                cardCCVField.getText())) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText("Card details are valid");
+            alert.setContentText("You can now register as a premium user");
+            alert.showAndWait();
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Invalid card details");
+            alert.setContentText("Please check your card details and try again");
+            alert.showAndWait();
+        }
+
         System.out.println("checking card details");
-        System.out.println("card number:" + cardNumber.getText());
+        System.out.println("card number:" + cardNumberField.getText());
         System.out.println("card expiration date:" + cardExpirationDate.getValue());
-        System.out.println("card CCV:" + cardCCV.getText());
+        System.out.println("card CCV:" + cardCCVField.getText());
     }
 
     @FXML
     private void createUser(ActionEvent event) {
-        System.out.println("Registration controller");
-        System.out.println("user wants to register");
-        System.out.println("user name:" + userNameTextField.getText());
-        System.out.println("user email:" + userEmailTextField.getText());
-        System.out.println("user password:" + passwordTextField.getText());
-        System.out.println("user date of birth:" + dateOfBirthPicker.getValue());
+        if (userNameTextField.getText().isEmpty() || userEmailTextField.getText().isEmpty()
+                || passwordTextField.getText().isEmpty() || dateOfBirthPicker.getValue() == null
+                || userGenderTextField.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Invalid user details");
+            alert.setContentText("Please fill all the fields and try again");
+            alert.showAndWait();
+        } else {
+            sessionManager.registerPremiumUser(userNameTextField.getText(), userEmailTextField.getText(),
+                    passwordTextField.getText(), dateOfBirthPicker.getValue(), userGenderTextField.getText(),
+                    cardNumberField.getText(), cardExpirationDate.getValue(), cardCCVField.getText());
+        }
+        // System.out.println("Registration controller");
+        // System.out.println("user wants to register");
+        // System.out.println("user name:" + userNameTextField.getText());
+        // System.out.println("user email:" + userEmailTextField.getText());
+        // System.out.println("user password:" + passwordTextField.getText());
+        // System.out.println("user date of birth:" + dateOfBirthPicker.getValue());
         windowManager.switchToScene("primaryStage", "loginScene");
+    }
 
-        // TODO add user and go to other scene
+    @FXML
+    private void goBack(ActionEvent event) {
+        System.out.println("going back to registration scene");
+        windowManager.switchToScene("primaryStage", "registerScene");
     }
 
     @Override
