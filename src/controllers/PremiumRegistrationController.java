@@ -46,7 +46,7 @@ public class PremiumRegistrationController extends BasicController {
     private Button checkCardButton;
 
     @FXML
-    private Button loginButton;
+    private Button RegisterButton;
 
     @FXML
     private Button goBackButton;
@@ -129,12 +129,24 @@ public class PremiumRegistrationController extends BasicController {
             alert.setContentText("Please fill all the fields and try again");
             alert.showAndWait();
         } else {
-            sessionManager.registerPremiumUser(userNameTextField.getText(), userEmailTextField.getText(),
+            if (sessionManager.registerPremiumUser(userNameTextField.getText(), userEmailTextField.getText(),
                     passwordTextField.getText(), dateOfBirthPicker.getValue(), userGenderTextField.getText(),
-                    cardNumberField.getText(), cardExpirationDate.getValue(), cardCCVField.getText());
+                    cardNumberField.getText(), cardExpirationDate.getValue(), cardCCVField.getText())) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setHeaderText("User created");
+                alert.setContentText("You can now login as a premium user");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("User name already exists");
+                alert.setContentText("Please check your user details and try again");
+                alert.showAndWait();
+                return;
+            }
+            windowManager.switchToScene("primaryStage", "loginScene");
         }
-
-        windowManager.switchToScene("primaryStage", "loginScene");
     }
 
     /**
@@ -145,14 +157,14 @@ public class PremiumRegistrationController extends BasicController {
     @FXML
     private void goBack(ActionEvent event) {
         System.out.println("going back to registration scene");
-        userEmailTextField.clear();
-        userNameTextField.clear();
-        passwordTextField.clear();
-        dateOfBirthPicker.setValue(null);
-        userGenderTextField.clear();
-        cardNumberField.clear();
-        cardExpirationDate.setValue(null);
-        cardCCVField.clear();
+        // userEmailTextField.clear();
+        // userNameTextField.clear();
+        // passwordTextField.clear();
+        // dateOfBirthPicker.setValue(null);
+        // userGenderTextField.clear();
+        // cardNumberField.clear();
+        // cardExpirationDate.setValue(null);
+        // cardCCVField.clear();
 
         windowManager.switchToScene("primaryStage", "registerScene");
     }

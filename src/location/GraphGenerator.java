@@ -14,8 +14,8 @@ import vehicle.FuelType;
  * stations.
  */
 public class GraphGenerator {
-    private static final int MAX_CITIES = 10;
-    private static final int MAX_FUEL_STATIONS = 5;
+    private static final int MAX_CITIES = 50;
+    private static final int MAX_FUEL_STATIONS = 30;
     // private static final int MAX_ROUTES_PER_POI = 3; // will not be used in this
     // project
     private static final int MAX_SPEED_LIMIT = 130;
