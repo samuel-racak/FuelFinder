@@ -26,7 +26,7 @@ public class User implements Comparable<User>, Serializable {
      * @param gender
      * @param car
      */
-    public User(UserType userType, String name, String email, String password, LocalDate dataOfBirth, String gender,
+    public User(UserType userType, String name, String email, String password, LocalDate dateOfBirth, String gender,
             Car car) {
         this.userType = userType;
         this.userName = name;
@@ -35,6 +35,7 @@ public class User implements Comparable<User>, Serializable {
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.car = car;
+        System.out.println(dateOfBirth);
     }
 
     public UserType getUserType() {
@@ -96,6 +97,17 @@ public class User implements Comparable<User>, Serializable {
     @Override
     public int compareTo(User other) {
         return this.userName.compareTo(other.getUserName());
+    }
+
+    @Override
+    public String toString() {
+        return "User Type: " + userType + "\n" +
+                "Username: " + userName + "\n" +
+                "Email: " + email + "\n" +
+                "Password: " + password + "\n" +
+                "Date of Birth: " + dateOfBirth + "\n" +
+                "Gender: " + gender + "\n" +
+                "Car: " + (car != null ? car.toString() : "None");
     }
 
 }
