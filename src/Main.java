@@ -1,34 +1,47 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
-
 import controllers.WindowManager;
 import javafx.application.Application;
 import javafx.application.Platform;
-// import javafx.fxml.FXMLLoader;
-// import javafx.scene.Parent;
-// import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+
+import user.SessionManager;
 import user.UserManager;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        // set the icon of the application
+        primaryStage.getIcons().add(new Image("file:src/resources/icon.png"));
+
         // WindowManager windowManager = new WindowManager(primaryStage);
-        WindowManager windowManager = new WindowManager();
+        WindowManager windowManager = WindowManager.getInstance();
+        SessionManager sessionManager = SessionManager.getInstance();
+
+        // create admin account
+        String dateString = "12.8.1974";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.M.yyyy");
+        LocalDate date = LocalDate.parse(dateString, formatter);
+        sessionManager.registerAdmin("kapitan", "kapitan@danko.sk",
+                "vylozky", date, "chlap");
+
         windowManager.addStage("primaryStage", primaryStage);
 
-        windowManager.addScene("loginScene", "login.fxml");
-        windowManager.addScene("registerScene", "register.fxml");
-        windowManager.addScene("premiumScene", "registerPremium.fxml");
-        windowManager.addScene("mainScene", "mainWindow.fxml");
-        windowManager.addScene("settingsScene", "settings.fxml");
-        windowManager.addScene("carScene", "car.fxml"); // used to setup a new car
-        windowManager.addScene("premiumUpgradeScene", "goPremium.fxml");
-        windowManager.addScene("adminScene", "admin.fxml");
+        windowManager.addScene("loginScene", "login.fxml", sessionManager);
+        windowManager.addScene("registerScene", "register.fxml", sessionManager);
+        windowManager.addScene("premiumScene", "registerPremium.fxml", sessionManager);
+        windowManager.addScene("mainScene", "mainWindow.fxml", sessionManager);
+        windowManager.addScene("settingsScene", "settings.fxml", sessionManager);
+        windowManager.addScene("carScene", "car.fxml", sessionManager); // used to setup a new car
+        windowManager.addScene("premiumUpgradeScene", "goPremium.fxml", sessionManager);
+        windowManager.addScene("adminScene", "admin.fxml", sessionManager);
 
         windowManager.switchToScene("primaryStage", "loginScene");
         // windowManager.switchToScene("primaryStage", "mainScene");
