@@ -132,9 +132,8 @@ public class SettingsController extends BasicController {
 
     @FXML
     void generateRandomCar(ActionEvent event) {
-        // TODO: generate random car
-        // sessionManager.generateRandomCar(sessionManager.getCurrentUser()); // This
-        // will generate a random car and add it to the user
+        sessionManager.generateRandomCar(sessionManager.getCurrentUser());
+        fillGUI();
     }
 
     @FXML
@@ -155,7 +154,6 @@ public class SettingsController extends BasicController {
                 windowManager.removeStage("popUpStage");
             }
         });
-        // TODO: create new page for user to upgrade to premium
     }
 
     @FXML
