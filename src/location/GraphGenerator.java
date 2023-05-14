@@ -9,6 +9,10 @@ import java.util.Random;
 import navigation.Graph;
 import vehicle.FuelType;
 
+/**
+ * This class generates a graph representing a map with cities and fuel
+ * stations.
+ */
 public class GraphGenerator {
     private static final int MAX_CITIES = 10;
     private static final int MAX_FUEL_STATIONS = 5;
@@ -22,6 +26,11 @@ public class GraphGenerator {
     private static final String[] ServiceNames = { "Car Wash", "Car Repair", "Car Painting", "Car Tuning", "Car Rental",
             "Car Parking", "Car Inspection", "Car Insurance", "Car Towing", "Condom Wending Machine", "Food" };
 
+    /**
+     * Generates a graph representing a map with cities and fuel stations.
+     *
+     * @return A graph representing a map with cities and fuel stations.
+     */
     public static Graph generateGraph() {
         Graph graph = new Graph();
         List<PointOfInterest> pointsOfInterest = new ArrayList<>();

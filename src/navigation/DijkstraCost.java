@@ -12,6 +12,11 @@ import location.PointOfInterest;
 import location.Route;
 import vehicle.Car;
 
+/**
+ * This class implements the DijkstraCost strategy for finding the cheapest
+ * route
+ * between two points of interest (POIs)
+ */
 public class DijkstraCost implements Strategy {
     private double maxFuelPercentage; // The maximum amount of fuel that can be refilled at a fuel station (in
     // percentage of the cars fuelCapacity) (0-100)

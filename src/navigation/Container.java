@@ -6,17 +6,37 @@ import location.PointOfInterest;
 import location.Route;
 import vehicle.Car;
 
+/**
+ * this class will be used to change the strategy of finding a route between two
+ * points of interest (POIs) this is Implementation of Strategy Pattern
+ *
+ */
 public class Container {
     private Strategy strategy;
 
+    /**
+     * Constructor
+     *
+     * @param strategy
+     */
     public Container(Strategy strategy) {
         this.strategy = strategy;
     }
 
+    /**
+     * Getter for strategy
+     *
+     * @return
+     */
     public Strategy getStrategy() {
         return this.strategy;
     }
 
+    /**
+     * Setter for strategy
+     *
+     * @param strategy
+     */
     public void setStrategy(Strategy strategy) {
         this.strategy = strategy;
     }

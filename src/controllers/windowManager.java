@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-// this class will be responsible for managing the scenes and controllers
 public class WindowManager {
     private Map<String, Stage> stages = new HashMap<>();
     private Map<String, Scene> scenes = new HashMap<>();

@@ -14,6 +14,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
+/**
+ * This class is the controller for the registration scene of the application.
+ */
 public class RegistrationController extends BasicController {
 
     @FXML
@@ -48,6 +51,9 @@ public class RegistrationController extends BasicController {
     private static final String IMAGE_LOC = "/resources/Cyber";
     private static final int TIME = 2;
 
+    /**
+     * Initializes the controller.
+     */
     @FXML
     public void initialize() {
         imageView.setImage(new Image(IMAGE_LOC + "1.jpg"));
@@ -59,6 +65,11 @@ public class RegistrationController extends BasicController {
         timeline.play();
     }
 
+    /**
+     * Creates a new user.
+     *
+     * @param event The event that triggered this method.
+     */
     @FXML
     private void createUser(ActionEvent event) {
         if (userNameTextField.getText().isEmpty() || userEmailTextField.getText().isEmpty()
@@ -107,12 +118,22 @@ public class RegistrationController extends BasicController {
         System.out.println("user gender:" + userGenderTextField.getText());
     }
 
+    /**
+     * Goes to the premium scene.
+     *
+     * @param event The event that triggered this method.
+     */
     @FXML
     private void goPremium(ActionEvent event) {
         System.out.println("user wants to go premium");
         windowManager.switchToScene("primaryStage", "premiumScene");
     }
 
+    /**
+     * Goes back to the login scene.
+     *
+     * @param event The event that triggered this method.
+     */
     @FXML
     private void goBack(ActionEvent event) {
         System.out.println("user wants to go back");
@@ -124,6 +145,9 @@ public class RegistrationController extends BasicController {
         windowManager.switchToScene("primaryStage", "loginScene");
     }
 
+    /**
+     * Sets the title of the stage.
+     */
     @Override
     public void setTitle() {
         stage.setTitle("Registration");

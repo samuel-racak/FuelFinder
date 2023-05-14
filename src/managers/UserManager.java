@@ -20,6 +20,9 @@ import user.UserType;
 import vehicle.Car;
 import vehicle.FuelType;
 
+/**
+ * This class will be used to manage the users
+ */
 public class UserManager {
     private static UserManager instance;
     private static Map<String, User> registeredUsers; // first argument is the username and the second is the user

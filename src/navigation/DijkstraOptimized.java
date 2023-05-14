@@ -11,6 +11,11 @@ import location.PointOfInterest;
 import location.Route;
 import vehicle.Car;
 
+/**
+ * This class implements the Dijkstra algorithm to find the shortest route
+ * between two points of interest (POIs) in a graph while ending sooner than
+ * Dijkstra.java
+ */
 public class DijkstraOptimized implements Strategy {
 
     /**

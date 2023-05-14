@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -24,6 +25,9 @@ import javafx.stage.Stage;
 import location.PointOfInterest;
 import location.Route;
 
+/**
+ * This class is the controller for the main scene of the application.
+ */
 public class MainController extends BasicController {
     private String currentLocation;
     private String destinationLocation;
@@ -70,6 +74,9 @@ public class MainController extends BasicController {
     @FXML
     private Label userNameLabel;
 
+    /**
+     * Initializes the controller.
+     */
     @FXML
     void initialize() {
         // Create a Circle with the desired radius
@@ -90,24 +97,13 @@ public class MainController extends BasicController {
         strategyChoice.getItems().setAll("Shortest", "Cheapest");
         // Set the default value to be the first strategy
         strategyChoice.setValue("Shortest");
-
-        // Add a listener to the selectedItem property of the ListView
-        listOfLocations.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            // This code will be executed whenever the user selects an item in the ListView
-            if (newValue != null) {
-                System.out.println("Selected item: " + newValue);
-                // nameField.setText(newValue.getName());
-                // addressField.setText(newValue.getAddress());
-                // ratingField.setText(String.valueOf(newValue.getRating()));
-            } else {
-                // nameField.clear();
-                // addressField.clear();
-                // ratingField.clear();
-            }
-
-        });
     }
 
+    /**
+     * Goes to the premium upgrade page.
+     *
+     * @param event The event that triggered this method.
+     */
     @FXML
     void goPremium(ActionEvent event) {
         Stage popUpStage = new Stage();
@@ -123,11 +119,21 @@ public class MainController extends BasicController {
         });
     }
 
+    /**
+     * Logs out from the system.
+     *
+     * @param event The event that triggered this method.
+     */
     @FXML
     void logout(ActionEvent event) {
         windowManager.switchToScene("primaryStage", "loginScene");
     }
 
+    /**
+     * Sets the current location.
+     *
+     * @param event The event that triggered this method.
+     */
     @FXML
     void setCurrent(ActionEvent event) {
         if (listOfLocations.getSelectionModel().getSelectedItem() != null) {
@@ -137,6 +143,11 @@ public class MainController extends BasicController {
         }
     }
 
+    /**
+     * Sets the destination location.
+     *
+     * @param event The event that triggered this method.
+     */
     @FXML
     void setDestination(ActionEvent event) {
         if (listOfLocations.getSelectionModel().getSelectedItem() != null) {
@@ -146,6 +157,11 @@ public class MainController extends BasicController {
         }
     }
 
+    /**
+     * Navigates to a destination.
+     *
+     * @param event The event that triggered this method.
+     */
     @FXML
     void navigate(ActionEvent event) {
         System.out.println("Navigate button pressed");
@@ -166,53 +182,87 @@ public class MainController extends BasicController {
             return;
         }
 
-        sessionManager.changeStrategy(strategyChoice.getValue());
-        List<Route> result = sessionManager.navigate(currentLocation, destinationLocation,
-                sessionManager.getCurrentUser().getCar());
-        if (result == null) {
-            if (sessionManager.getCurrentUser().getCar() != null) {
+        Task<List<Route>> navigationTask = new Task<List<Route>>() {
+            @Override
+            protected List<Route> call() {
+                sessionManager.changeStrategy(strategyChoice.getValue());
+                return sessionManager.navigate(currentLocation, destinationLocation,
+                        sessionManager.getCurrentUser().getCar());
+            }
+        };
+
+        navigationTask.setOnSucceeded(e -> {
+            List<Route> result = navigationTask.getValue();
+            if (result == null) {
+                if (sessionManager.getCurrentUser().getCar() != null) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("No route found");
+                    alert.setContentText("No route found between " + currentLocation + " and " + destinationLocation);
+                    alert.showAndWait();
+                    return;
+                }
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
-                alert.setHeaderText("No route found");
-                alert.setContentText("No route found between " + currentLocation + " and " + destinationLocation);
+                alert.setHeaderText("No car selected");
+                alert.setContentText("Please select a car in the settings menu");
                 alert.showAndWait();
                 return;
             }
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("No car selected");
-            alert.setContentText("Please select a car in the settings menu");
-            alert.showAndWait();
-            return;
-        }
+            System.out.println("Route found");
+            result.forEach(route -> System.out.println(route.toString()));
+            ObservableList<String> output = FXCollections
+                    .observableArrayList(
+                            result.stream().map(Route::toString).collect(Collectors.toList()));
+            routeList.setItems(output);
+        });
 
-        result.forEach(route -> System.out.println(route.toString()));
-        ObservableList<String> output = FXCollections
-                .observableArrayList(result.stream().map(Route::toString).collect(Collectors.toList()));
-        routeList.setItems(output);
-
+        Thread thread = new Thread(navigationTask);
+        thread.setDaemon(true);
+        thread.start();
     }
 
+    /**
+     * Opens the settings menu.
+     *
+     * @param event The event that triggered this method.
+     */
     @FXML
     void settings(ActionEvent event) {
         windowManager.switchToScene("primaryStage", "settingsScene");
     }
 
+    /**
+     * Shows the menu button.
+     *
+     * @param event The event that triggered this method.
+     */
     @FXML
     void showMenu(MouseEvent event) {
         menuButton.show();
     }
 
+    /**
+     * Hides the menu button.
+     *
+     * @param event The event that triggered this method.
+     */
     @FXML
     void hideMenu(MouseEvent event) {
         menuButton.hide();
     }
 
+    /**
+     * Initializes the scene.
+     */
     @Override
     public void setTitle() {
         stage.setTitle("Main");
     }
 
+    /**
+     * Fills the GUI with the appropriate information.
+     */
     @Override
     public void fillGUI() {
         userNameLabel.setText(sessionManager.getCurrentUsername());

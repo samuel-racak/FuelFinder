@@ -14,6 +14,11 @@ import navigation.Graph;
 import vehicle.Car;
 import navigation.Container;
 
+/**
+ * This class will be used to manage the points of interest (POIs) and the
+ * routes
+ * between them
+ */
 public class POIManager {
     private static POIManager instance;
     private Graph graph; // this is the graph of routes between points of interest (POIs)

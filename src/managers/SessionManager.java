@@ -20,6 +20,9 @@ import vehicle.Car;
 import vehicle.CarGenerator;
 import vehicle.FuelType;
 
+/**
+ * this class will be used to manage the session, users and points of interest
+ */
 public class SessionManager {
     private static SessionManager instance;
     private Session session;

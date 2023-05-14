@@ -13,6 +13,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
+/**
+ * This class is the controller for the premium registration scene of the
+ * application.
+ */
 public class PremiumRegistrationController extends BasicController {
     @FXML
     private TextField userNameTextField;
@@ -55,6 +59,9 @@ public class PremiumRegistrationController extends BasicController {
     private static final String IMAGE_LOC = "/resources/Cyber";
     private static final int TIME = 2;
 
+    /**
+     * Initializes the controller.
+     */
     @FXML
     public void initialize() {
         imageView.setImage(new Image(IMAGE_LOC + "1.jpg"));
@@ -67,6 +74,11 @@ public class PremiumRegistrationController extends BasicController {
         timeline.play();
     }
 
+    /**
+     * Checks the entered card details.
+     *
+     * @param event The event that triggered this method.
+     */
     @FXML
     private void checkCardDetails(ActionEvent event) {
         if (cardNumberField.getText().isEmpty() || cardExpirationDate.getValue() == null
@@ -101,6 +113,11 @@ public class PremiumRegistrationController extends BasicController {
         System.out.println("card CCV:" + cardCCVField.getText());
     }
 
+    /**
+     * Creates a new user.
+     *
+     * @param event The event that triggered this method.
+     */
     @FXML
     private void createUser(ActionEvent event) {
         if (userNameTextField.getText().isEmpty() || userEmailTextField.getText().isEmpty()
@@ -120,6 +137,11 @@ public class PremiumRegistrationController extends BasicController {
         windowManager.switchToScene("primaryStage", "loginScene");
     }
 
+    /**
+     * Goes back to the registration scene.
+     *
+     * @param event The event that triggered this method.
+     */
     @FXML
     private void goBack(ActionEvent event) {
         System.out.println("going back to registration scene");
@@ -135,6 +157,9 @@ public class PremiumRegistrationController extends BasicController {
         windowManager.switchToScene("primaryStage", "registerScene");
     }
 
+    /**
+     * Sets the title of the stage.
+     */
     @Override
     public void setTitle() {
         stage.setTitle("Premium registration");

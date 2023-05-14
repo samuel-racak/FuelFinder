@@ -8,6 +8,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+/**
+ * This class is the controller for the login scene of the application.
+ */
 public class LoginController extends BasicController {
     @FXML
     private Button registerButton;
@@ -24,6 +27,11 @@ public class LoginController extends BasicController {
     @FXML
     private PasswordField passwordTextField;
 
+    /**
+     * Logs in a user.
+     *
+     * @param event The event that triggered this method.
+     */
     @FXML
     public void login(ActionEvent event) {
         String userName = userNameTextField.getText();
@@ -64,12 +72,22 @@ public class LoginController extends BasicController {
         }
     }
 
+    /**
+     * Registers a new user.
+     *
+     * @param event The event that triggered this method.
+     */
     @FXML
     public void register(ActionEvent event) {
         System.out.println("user wants to register");
         windowManager.switchToScene("primaryStage", "registerScene");
     }
 
+    /**
+     * Goes to the admin page.
+     *
+     * @param event The event that triggered this method.
+     */
     @FXML
     public void goToAdminPage(ActionEvent event) {
         String userName = userNameTextField.getText();
@@ -105,11 +123,17 @@ public class LoginController extends BasicController {
         }
     }
 
+    /**
+     * Sets the title of the stage.
+     */
     @Override
     public void setTitle() {
         stage.setTitle("Login");
     }
 
+    /**
+     * Fills the GUI with data.
+     */
     @Override
     public void fillGUI() {
         // clear text fields

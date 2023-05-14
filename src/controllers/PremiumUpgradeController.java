@@ -6,6 +6,10 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+/**
+ * This class is the controller for the premium upgrade scene of the
+ * application.
+ */
 public class PremiumUpgradeController extends BasicController {
     @FXML
     private TextField cardNumberField;
@@ -16,6 +20,9 @@ public class PremiumUpgradeController extends BasicController {
     @FXML
     private TextField securityCodeField;
 
+    /**
+     * Handles the submit button action.
+     */
     @FXML
     private void handleSubmitButtonAction() {
         if (cardNumberField.getText().isEmpty() || cardExpirationDate.getValue() == null
@@ -47,11 +54,17 @@ public class PremiumUpgradeController extends BasicController {
         stage.close(); // close the current window
     }
 
+    /**
+     * Sets the title of the stage.
+     */
     @Override
     public void setTitle() {
         stage.setTitle("Premium Upgrade");
     }
 
+    /**
+     * Fills the GUI with data.
+     */
     @Override
     public void fillGUI() {
         cardNumberField.clear();

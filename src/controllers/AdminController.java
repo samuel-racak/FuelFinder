@@ -16,6 +16,9 @@ import javafx.scene.shape.Circle;
 import user.User;
 import user.UserType;
 
+/**
+ * This class is the controller for the admin scene of the application.
+ */
 public class AdminController extends BasicController {
 
     @FXML
@@ -42,6 +45,9 @@ public class AdminController extends BasicController {
     @FXML
     private Label userNameLabel;
 
+    /**
+     * Initializes the controller.
+     */
     @FXML
     void initialize() {
         // Create a Circle with the desired radius
@@ -70,6 +76,11 @@ public class AdminController extends BasicController {
 
     }
 
+    /**
+     * Deletes a user from the system.
+     *
+     * @param event The event that triggered this method.
+     */
     @FXML
     void deleteUser(ActionEvent event) {
         User toDelete = userList.getSelectionModel().getSelectedItem();
@@ -117,11 +128,21 @@ public class AdminController extends BasicController {
         }
     }
 
+    /**
+     * Logs out from the system.
+     *
+     * @param event The event that triggered this method.
+     */
     @FXML
     void logout(ActionEvent event) {
         windowManager.switchToScene("primaryStage", "loginScene");
     }
 
+    /**
+     * Promotes a user to admin.
+     *
+     * @param event The event that triggered this method.
+     */
     @FXML
     void setAdmin(ActionEvent event) {
         User toPromote = userList.getSelectionModel().getSelectedItem();
@@ -164,6 +185,11 @@ public class AdminController extends BasicController {
         }
     }
 
+    /**
+     * Promotes a user to premium user.
+     *
+     * @param event The event that triggered this method.
+     */
     @FXML
     void setPremium(ActionEvent event) {
         User toPromote = userList.getSelectionModel().getSelectedItem();
@@ -207,11 +233,17 @@ public class AdminController extends BasicController {
         }
     }
 
+    /**
+     * Sets the title of the stage.
+     */
     @Override
     public void setTitle() {
         stage.setTitle("Admin");
     }
 
+    /**
+     * Fills the GUI with data.
+     */
     @Override
     public void fillGUI() {
         userNameLabel.setText(sessionManager.getCurrentUsername());

@@ -11,6 +11,9 @@ import javafx.stage.Stage;
 
 import vehicle.FuelType;
 
+/**
+ * This class is the controller for the car form scene of the application.
+ */
 public class CarController extends BasicController {
     @FXML
     private TextField yearField;
@@ -36,6 +39,9 @@ public class CarController extends BasicController {
     @FXML
     private Button submitButton;
 
+    /**
+     * Initializes the controller.
+     */
     @FXML
     public void initialize() {
         // Populate the fuel type combo box with the available fuel types
@@ -52,6 +58,9 @@ public class CarController extends BasicController {
         });
     }
 
+    /**
+     * Handles the submit button action.
+     */
     @FXML
     private void handleSubmitButtonAction() {
         // Get the entered values from the form fields
@@ -105,6 +114,9 @@ public class CarController extends BasicController {
         windowManager.getController("settingsScene").fillGUI();
     }
 
+    /**
+     * Sets the title of the stage.
+     */
     @Override
     public void setTitle() {
         stage.setTitle("Car Form");

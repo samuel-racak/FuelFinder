@@ -11,6 +11,10 @@ import location.PointOfInterest;
 import location.Route;
 import vehicle.Car;
 
+/**
+ * This class implements the Dijkstra algorithm for finding the shortest route
+ * between two points of interest (POIs)
+ */
 public class Dijkstra implements Strategy {
     /**
      * Finds the shortest route between two points of interest (POIs) using
