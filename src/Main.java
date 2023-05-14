@@ -14,8 +14,19 @@ import javafx.stage.Window;
 import managers.SessionManager;
 import managers.UserManager;
 
+/**
+ * The Main class extends the Application class and is the entry point for the
+ * JavaFX application.
+ */
 public class Main extends Application {
 
+    /**
+     * Starts the JavaFX application by setting up the windowManager,
+     * sessionManager, stages, and scenes.
+     *
+     * @param primaryStage The primary Stage for the application.
+     * @throws Exception If an error occurs while starting the application.
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         // set the icon of the application
@@ -29,7 +40,7 @@ public class Main extends Application {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.M.yyyy");
         LocalDate date = LocalDate.parse(dateString, formatter);
         sessionManager.registerAdmin("kapitan", "kapitan@danko.sk",
-                "vylozky", date, "chlap");
+                "danko", date, "chlap");
 
         windowManager.addStage("primaryStage", primaryStage);
 
@@ -54,6 +65,13 @@ public class Main extends Application {
         });
     }
 
+    /**
+     * Shows a confirmation dialog to confirm if the user wants to log out and exit
+     * the application.
+     *
+     * @param window The Window to show the confirmation dialog on.
+     * @return True if the user confirms to log out and exit, false otherwise.
+     */
     private boolean confirmLogout(Window window) {
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.initOwner(window); // this will make the alert window the child of the main window
@@ -64,6 +82,12 @@ public class Main extends Application {
         return result.isPresent() && result.get() == ButtonType.OK;
     }
 
+    /**
+     * Called when the JavaFX application is stopped. Saves users to file and exits
+     * the platform.
+     *
+     * @throws Exception If an error occurs while stopping the application.
+     */
     @Override
     public void stop() throws Exception {
         System.out.println("closing application and saving users to file");
@@ -71,6 +95,12 @@ public class Main extends Application {
         Platform.exit();
     }
 
+    /**
+     * The main method for launching the JavaFX application.
+     *
+     * @param args Command line arguments.
+     * @throws Exception If an error occurs while launching the application.
+     */
     public static void main(String[] args) throws Exception {
         launch(args);
     }
