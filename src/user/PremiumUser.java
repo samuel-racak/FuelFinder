@@ -2,7 +2,7 @@ package user;
 
 import java.time.LocalDate;
 
-import car.Car;
+import vehicle.Car;
 
 public class PremiumUser extends User {
     private PaymentCard card;
@@ -16,5 +16,4 @@ public class PremiumUser extends User {
     public PaymentCard getCard() {
         return card;
     }
-    // TODO add some methods for premium user
 }

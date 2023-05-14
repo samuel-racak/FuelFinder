@@ -24,7 +24,6 @@ public class WindowManager {
 
     public static WindowManager getInstance() {
         if (instance == null) {
-            // instance = new WindowManager(new Stage());
             instance = new WindowManager();
         }
         return instance;
@@ -46,7 +45,6 @@ public class WindowManager {
             controller.setWindowManager(this);
             controller.setSessionManager(sessionManager); // This is the default session manager
             controller.setStage(stages.get("primaryStage")); // This is the default stage name
-            // controller.setTitle();
             Scene scene = new Scene(root);
             scenes.put(name, scene);
             controllers.put(name, loader.getController());

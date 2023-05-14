@@ -3,12 +3,6 @@ package location;
 import java.io.Serializable;
 import java.util.Objects;
 
-// Todo: rename: maxSpeed -> speedLimit
-// Todo: rename: length -> distance
-// Todo: rename: start -> from
-// Todo: rename: finish -> to
-// Todo: rename: Class to Line
-
 public class Route implements Serializable {
     private int length;
     private PointOfInterest destination;
@@ -78,6 +72,6 @@ public class Route implements Serializable {
 
     @Override
     public String toString() {
-        return "Length: " + length + "\nDestination: " + destination + "\nMax speed: " + maxSpeed;
+        return getLength() + "km" + "\nDestination: " + getDestination() + "\nMax speed: " + getMaxSpeed() + "km/h";
     }
 }

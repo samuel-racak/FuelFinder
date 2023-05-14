@@ -72,7 +72,6 @@ public abstract class PointOfInterest implements Serializable {
 
     @Override
     public String toString() {
-        return "Name: " + getName() + "\n" + "Latitude: " + getLatitude() + "\n" + "Longitude: " + getLongitude();
+        return getName() + "\n" + "Latitude: " + getLatitude() + "\n" + "Longitude: " + getLongitude();
     }
-
 }

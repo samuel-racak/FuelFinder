@@ -2,12 +2,12 @@ package location;
 
 import java.util.List;
 import java.util.Map;
-
-import car.FuelType;
 import java.util.Objects;
 
+import vehicle.FuelType;
+
 public class FuelStation extends PointOfInterest {
-    private Map<FuelType, Integer> fuels;
+    private Map<FuelType, Integer> fuels; // map of fuel types and their prices
     private List<Service> services;
     private double rating;
     private int count = 0;
@@ -97,6 +97,7 @@ public class FuelStation extends PointOfInterest {
 
     @Override
     public String toString() {
-        return "Fuels: " + fuels + "\nServices: " + services + "\nRating: " + rating + "\nCount: " + count;
+        return getName() + "\nFuels: " + getFuels() + "\nServices: " + getServices() + "\nRating: " + getRating()
+                + "\n#Reviews: " + getCount();
     }
 }

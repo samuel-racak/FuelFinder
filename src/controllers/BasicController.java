@@ -24,6 +24,6 @@ public abstract class BasicController {
     public abstract void setTitle();
 
     public void fillGUI() {
-        ;
+        ; // do nothing
     }
 }

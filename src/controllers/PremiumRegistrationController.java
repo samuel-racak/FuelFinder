@@ -58,15 +58,10 @@ public class PremiumRegistrationController extends BasicController {
     @FXML
     public void initialize() {
         imageView.setImage(new Image(IMAGE_LOC + "1.jpg"));
-        // imageView.setImage(new Image(getClass().getResource(IMAGE_LOC +
-        // "1.jpg").toExternalForm()));
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(TIME), event -> {
             currentImageIndex = (currentImageIndex + 1) % NUM_IMAGES;
             imageView.setImage(new Image(IMAGE_LOC + (currentImageIndex + 1) + ".jpg"));
-            // imageView.setImage(
-            // new Image(getClass().getResource(IMAGE_LOC + (currentImageIndex + 1) +
-            // ".jpg").toExternalForm()));
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
@@ -121,18 +116,22 @@ public class PremiumRegistrationController extends BasicController {
                     passwordTextField.getText(), dateOfBirthPicker.getValue(), userGenderTextField.getText(),
                     cardNumberField.getText(), cardExpirationDate.getValue(), cardCCVField.getText());
         }
-        // System.out.println("Registration controller");
-        // System.out.println("user wants to register");
-        // System.out.println("user name:" + userNameTextField.getText());
-        // System.out.println("user email:" + userEmailTextField.getText());
-        // System.out.println("user password:" + passwordTextField.getText());
-        // System.out.println("user date of birth:" + dateOfBirthPicker.getValue());
+
         windowManager.switchToScene("primaryStage", "loginScene");
     }
 
     @FXML
     private void goBack(ActionEvent event) {
         System.out.println("going back to registration scene");
+        userEmailTextField.clear();
+        userNameTextField.clear();
+        passwordTextField.clear();
+        dateOfBirthPicker.setValue(null);
+        userGenderTextField.clear();
+        cardNumberField.clear();
+        cardExpirationDate.setValue(null);
+        cardCCVField.clear();
+
         windowManager.switchToScene("primaryStage", "registerScene");
     }
 

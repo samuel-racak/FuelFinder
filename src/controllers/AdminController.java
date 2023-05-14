@@ -1,6 +1,8 @@
 package controllers;
 
 import exceptions.noPermissionException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
+
 import user.User;
 import user.UserType;
 
@@ -112,13 +115,6 @@ public class AdminController extends BasicController {
             thread.setDaemon(true);
             thread.start();
         }
-
-        // try {
-        // sessionManager.deleteUser(toDelete, sessionManager.getCurrentUser());
-        // } catch (noPermissionException e) {
-        // System.out.println("User " + sessionManager.getCurrentUsername()
-        // + " does not have permission to delete " + toDelete.getUserName());
-        // }
     }
 
     @FXML
@@ -219,7 +215,7 @@ public class AdminController extends BasicController {
     @Override
     public void fillGUI() {
         userNameLabel.setText(sessionManager.getCurrentUsername());
-        userList.getItems().clear(); // Clear the list
-        userList.getItems().addAll(sessionManager.getUsers().values());
+        ObservableList<User> users = FXCollections.observableArrayList(sessionManager.getUsers().values());
+        userList.setItems(users);
     }
 }

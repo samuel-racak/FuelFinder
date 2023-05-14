@@ -116,6 +116,11 @@ public class RegistrationController extends BasicController {
     @FXML
     private void goBack(ActionEvent event) {
         System.out.println("user wants to go back");
+        userEmailTextField.clear();
+        userNameTextField.clear();
+        passwordTextField.clear();
+        dateOfBirthPicker.setValue(null);
+        userGenderTextField.clear();
         windowManager.switchToScene("primaryStage", "loginScene");
     }
 

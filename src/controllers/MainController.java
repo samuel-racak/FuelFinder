@@ -1,8 +1,14 @@
 package controllers;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
@@ -11,12 +17,17 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import location.PointOfInterest;
+import location.Route;
+
 public class MainController extends BasicController {
+    private String currentLocation;
+    private String destinationLocation;
+
     @FXML
     private Label currentLocationLabel;
 
@@ -33,6 +44,9 @@ public class MainController extends BasicController {
     private ListView<String> listOfLocations;
 
     @FXML
+    private ListView<String> routeList;
+
+    @FXML
     private Button logoutButton;
 
     @FXML
@@ -45,19 +59,16 @@ public class MainController extends BasicController {
     private Button setDestinationButton;
 
     @FXML
+    private Button navigateButton;
+
+    @FXML
     private MenuItem settingsButton;
 
     @FXML
+    private ComboBox<String> strategyChoice;
+
+    @FXML
     private Label userNameLabel;
-
-    @FXML
-    private GridPane gridPane;
-
-    @FXML
-    private Label nameField;
-
-    @FXML
-    private Label Field;
 
     @FXML
     void initialize() {
@@ -75,11 +86,10 @@ public class MainController extends BasicController {
         // Set the clip property of the ImageView to the Circle
         imageView.setClip(clip);
 
-        // TODO: get list of locations from sessionManager
-        listOfLocations.getItems().addAll("Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7",
-                "Item 8", "Item 9", "Item 10", "Item 11", "Item 12", "Item 13", "Item 14", "Item 15", "Item 16",
-                "Item 17", "Item 18", "Item 19", "Item 20", "Item 21", "Item 22", "Item 23", "Item 24", "Item 25",
-                "Item 26", "Item 27", "Item 28", "Item 29", "Item 30", "Item 31", "Item 32", "Item 33", "Item 34");
+        // Populate the strategy choice box with the available strategies
+        strategyChoice.getItems().setAll("Shortest", "Cheapest");
+        // Set the default value to be the first strategy
+        strategyChoice.setValue("Shortest");
 
         // Add a listener to the selectedItem property of the ListView
         listOfLocations.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -120,19 +130,67 @@ public class MainController extends BasicController {
 
     @FXML
     void setCurrent(ActionEvent event) {
-        // TODO: set current location
-
         if (listOfLocations.getSelectionModel().getSelectedItem() != null) {
             currentLocationLabel.setText(listOfLocations.getSelectionModel().getSelectedItem());
+            currentLocation = listOfLocations.getSelectionModel().getSelectedItem();
+            System.out.println(currentLocation);
         }
     }
 
     @FXML
     void setDestination(ActionEvent event) {
-        // TODO: set destination
         if (listOfLocations.getSelectionModel().getSelectedItem() != null) {
             destinationLocationLabel.setText(listOfLocations.getSelectionModel().getSelectedItem());
+            destinationLocation = listOfLocations.getSelectionModel().getSelectedItem();
+            System.out.println(destinationLocation);
         }
+    }
+
+    @FXML
+    void navigate(ActionEvent event) {
+        System.out.println("Navigate button pressed");
+        if (currentLocation == null || destinationLocation == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("No location selected");
+            alert.setContentText("Please select a current location and a destination");
+            alert.showAndWait();
+            return;
+        }
+        if (currentLocation.equals(destinationLocation)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Same location selected");
+            alert.setContentText("Please select a different destination");
+            alert.showAndWait();
+            return;
+        }
+
+        sessionManager.changeStrategy(strategyChoice.getValue());
+        List<Route> result = sessionManager.navigate(currentLocation, destinationLocation,
+                sessionManager.getCurrentUser().getCar());
+        if (result == null) {
+            if (sessionManager.getCurrentUser().getCar() != null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("No route found");
+                alert.setContentText("No route found between " + currentLocation + " and " + destinationLocation);
+                alert.showAndWait();
+                return;
+            }
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("No car selected");
+            alert.setContentText("Please select a car in the settings menu");
+            alert.showAndWait();
+            return;
+        }
+
+        result.forEach(route -> System.out.println(route.toString()));
+        ObservableList<String> output = FXCollections
+                .observableArrayList(result.stream().map(Route::toString).collect(Collectors.toList()));
+        routeList.setItems(output);
+
     }
 
     @FXML
@@ -158,5 +216,11 @@ public class MainController extends BasicController {
     @Override
     public void fillGUI() {
         userNameLabel.setText(sessionManager.getCurrentUsername());
+
+        List<String> pointsOfInterestStrings = sessionManager.getPOIs().stream()
+                .map(PointOfInterest::toString).collect(Collectors.toList()); // this changes the list of POIs to a list
+                                                                              // of strings
+        ObservableList<String> list = FXCollections.observableArrayList(pointsOfInterestStrings);
+        listOfLocations.setItems(list);
     }
 }

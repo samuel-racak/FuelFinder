@@ -5,18 +5,36 @@ import java.time.LocalDate;
 
 import exceptions.wrongCardDetailsException;
 
+/**
+ * The PaymentCard class represents a payment card.
+ * It implements the Serializable interface to allow it to be serialized.
+ */
 public class PaymentCard implements Serializable {
     private String cardNumber;
     private LocalDate expirationDate;
     private String securityCode;
 
+    /**
+     * Default constructor for the PaymentCard class.
+     * Initializes the card number, expiration date and security code to default
+     * values.
+     */
     public PaymentCard() {
-        // TODO: handle this situation
         this.cardNumber = "";
         this.expirationDate = LocalDate.now();
         this.securityCode = "";
     }
 
+    /**
+     * Constructor for the PaymentCard class.
+     * Initializes the card number, expiration date and security code to the given
+     * values.
+     *
+     * @param cardNumber     the card number
+     * @param expirationDate the expiration date
+     * @param securityCode   the security code
+     * @throws wrongCardDetailsException if the card number is not valid
+     */
     public PaymentCard(String cardNumber, LocalDate expirationDate, String securityCode)
             throws wrongCardDetailsException {
         if (isValid(cardNumber)) {
@@ -24,8 +42,6 @@ public class PaymentCard implements Serializable {
             this.expirationDate = expirationDate;
             this.securityCode = securityCode;
         } else {
-            // TODO handle this situation
-            System.out.print("wrong card number");
             throw new wrongCardDetailsException();
         }
     }
@@ -33,7 +49,7 @@ public class PaymentCard implements Serializable {
     /**
      * Takes cardNumber and checks if card is valid
      * Luhns algorithm made see the
-     * <a href="https://en.wikipedia.org/wiki/Luhn_algorithm"</a>
+     * {@link https://en.wikipedia.org/wiki/Luhn_algorithm}
      *
      * @param cardNumber
      * @return true if valid, else false
@@ -56,14 +72,29 @@ public class PaymentCard implements Serializable {
         return sum % 10 == 0;
     }
 
+    /**
+     * Returns the card number of the payment card.
+     *
+     * @return the card number of the payment card
+     */
     public String getCardNumber() {
         return cardNumber;
     }
 
+    /**
+     * Returns the expiration date of the payment card.
+     *
+     * @return the expiration date of the payment card
+     */
     public LocalDate getExpirationDate() {
         return expirationDate;
     }
 
+    /**
+     * Returns the security code of the payment card.
+     *
+     * @return the security code of the payment card
+     */
     public String getSecurityCode() {
         return securityCode;
     }

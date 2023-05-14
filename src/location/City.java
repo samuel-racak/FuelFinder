@@ -7,9 +7,10 @@ public class City extends PointOfInterest {
     int population;
     private List<String> attractions; // list of attractions in a given city such as museums, restaurants etc.
 
-    public City(String name, double latitude, double longitude, List<String> attractions) {
+    public City(String name, int population, double latitude, double longitude, List<String> attractions) {
         super(name, latitude, longitude);
         this.attractions = attractions;
+        this.population = population;
     }
 
     public int getPopulation() {
@@ -56,6 +57,6 @@ public class City extends PointOfInterest {
 
     @Override
     public String toString() {
-        return "Population: " + population + "\nAttractions: " + attractions;
+        return getName() + "\nPopulation: " + getPopulation() + "\nAttractions: " + getAttractions();
     }
 }

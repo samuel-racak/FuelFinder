@@ -71,9 +71,6 @@ public class SettingsController extends BasicController {
 
         // Set the clip property of the ImageView to the Circle
         imageView.setClip(clip);
-        // carInformationListView.getItems().addAll("Item 1", "Item 2", "Item 3", "Item
-        // 4", "Item 5", "Item 6", "Item 7");
-
     }
 
     @FXML

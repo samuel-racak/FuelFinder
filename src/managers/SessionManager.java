@@ -1,28 +1,35 @@
 package managers;
 
 import java.time.LocalDate;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
-import car.Car;
-import car.CarGenerator;
-import car.FuelType;
 import exceptions.noPermissionException;
 import exceptions.userDoesNotExistException;
 import exceptions.userNameTakenException;
 import exceptions.wrongCardDetailsException;
+import location.FuelStation;
+import location.PointOfInterest;
+import location.Route;
 import user.PaymentCard;
 import user.Session;
 import user.User;
 import user.UserType;
+import vehicle.Car;
+import vehicle.CarGenerator;
+import vehicle.FuelType;
 
 public class SessionManager {
     private static SessionManager instance;
     private Session session;
     private UserManager userManager;
+    private POIManager poiManager;
     // private POIManager poiManager;
 
     private SessionManager() {
         userManager = UserManager.getInstance();
+        poiManager = POIManager.getInstance();
         session = Session.getInstance();
     }
 
@@ -326,11 +333,17 @@ public class SessionManager {
         return true;
     }
 
+    /**
+     * adds a random car to the given user
+     *
+     * @param in user to add car to
+     * @return true if car added, false otherwise
+     */
     public boolean generateRandomCar(User in) {
         try {
             Car tempCar = CarGenerator.generateRandomCar();
             userManager.addCarToUser(in, tempCar.getYear(), tempCar.getLicenseNumber(),
-                    tempCar.getModel(), tempCar.getFuel(), tempCar.getFuelConsumption(),
+                    tempCar.getModel(), tempCar.getFuelType(), tempCar.getFuelConsumption(),
                     tempCar.getFuelTankCapacity(), tempCar.getCurrentFuelLevel());
         } catch (userDoesNotExistException e) {
             return false; // user not registered
@@ -338,8 +351,89 @@ public class SessionManager {
         return true;
     }
 
+    /**
+     * gets all users registered in the system
+     *
+     * @return map of all users registered in the system
+     */
     public Map<String, User> getUsers() {
         return userManager.getRegisteredUsers();
     }
 
+    // ------------------------------------------------POI------------------------------------------------
+
+    /**
+     * calculates the shortest route between two POIs with the given car and returns
+     * a list of routes
+     *
+     * @param start       POI to start from
+     * @param destination POI to end at
+     * @param car         car to use
+     * @return list of routes
+     */
+    public List<Route> calculateShortestRoute(PointOfInterest start, PointOfInterest destination, Car car) {
+        return poiManager.findRoute(start, destination, car);
+    }
+
+    /**
+     * changes the strategy of the POI manager to the given strategy
+     * strategy can be "Shortest" or "Cheapest"
+     *
+     * @param strategy strategy to change to
+     * @return true if strategy changed, false otherwise
+     */
+    public boolean changeStrategy(String strategy) {
+        if (strategy.equals("Shortest")) {
+            poiManager.changeStrategy(true);
+            return true;
+        } else if (strategy.equals("Cheapest")) {
+            poiManager.changeStrategy(false);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * returns a list of all POIs sorted by fuel stations first
+     * also has a comparator to sort the list by fuel stations first
+     *
+     * @return list of all POIs sorted by fuel stations first
+     */
+    public List<PointOfInterest> getPOIs() {
+        Comparator<PointOfInterest> poiComparator = new Comparator<PointOfInterest>() {
+            @Override
+            public int compare(PointOfInterest poi1, PointOfInterest poi2) {
+                if (poi1 instanceof FuelStation && !(poi2 instanceof FuelStation)) {
+                    return -1;
+                } else if (!(poi1 instanceof FuelStation) && poi2 instanceof FuelStation) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        };
+        List<PointOfInterest> sortedPOIs = poiManager.getPOIs();
+        sortedPOIs.sort(poiComparator);
+        return sortedPOIs;
+    }
+
+    /**
+     * returns list of all POIs which are needed to be visited to get from start to
+     * destination
+     *
+     * @param start       POI to start from
+     * @param destination POI to end at
+     * @param car         car to use
+     * @return list of all POIs which are needed to be visited to get from start to
+     */
+    public List<Route> navigate(String start, String destination, Car car) {
+        if (start == null || destination == null || car == null) {
+            return null;
+        }
+        Map<String, PointOfInterest> POIsMap = poiManager.getPOIsMap();
+        PointOfInterest startPOI = POIsMap.get(start);
+        PointOfInterest destinationPOI = POIsMap.get(destination);
+
+        return poiManager.findRoute(startPOI, destinationPOI, car);
+    }
 }

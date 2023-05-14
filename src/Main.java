@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+
 import managers.SessionManager;
 import managers.UserManager;
 
@@ -20,7 +21,6 @@ public class Main extends Application {
         // set the icon of the application
         primaryStage.getIcons().add(new Image("file:src/resources/icon.png"));
 
-        // WindowManager windowManager = new WindowManager(primaryStage);
         WindowManager windowManager = WindowManager.getInstance();
         SessionManager sessionManager = SessionManager.getInstance();
 
@@ -43,8 +43,6 @@ public class Main extends Application {
         windowManager.addScene("adminScene", "admin.fxml", sessionManager);
 
         windowManager.switchToScene("primaryStage", "loginScene");
-        // windowManager.switchToScene("primaryStage", "mainScene");
-        // windowManager.switchToScene("primaryStage", "premiumUpgradeScene");
 
         primaryStage.setOnCloseRequest(event -> {
             if (confirmLogout(primaryStage)) {
@@ -53,7 +51,6 @@ public class Main extends Application {
             } else {
                 event.consume(); // will prevent the app from closing when user clicks cancel
             }
-            // logout(primaryStage);
         });
     }
 
@@ -69,7 +66,6 @@ public class Main extends Application {
 
     @Override
     public void stop() throws Exception {
-        // TODO: end methods and safely close application
         System.out.println("closing application and saving users to file");
         UserManager.getInstance().saveToFile("src/resources/users.ser"); // save the users to file
         Platform.exit();

@@ -9,8 +9,6 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
-import car.Car;
-import car.FuelType;
 import exceptions.noPermissionException;
 import exceptions.userDoesNotExistException;
 import exceptions.userNameTakenException;
@@ -19,6 +17,8 @@ import user.PaymentCard;
 import user.PremiumUser;
 import user.User;
 import user.UserType;
+import vehicle.Car;
+import vehicle.FuelType;
 
 public class UserManager {
     private static UserManager instance;
@@ -46,6 +46,11 @@ public class UserManager {
         return instance;
     }
 
+    /**
+     * returns the registered users with the given username
+     *
+     * @return the registered users
+     */
     public User getUser(String userName) {
         return registeredUsers.get(userName);
     }
@@ -226,6 +231,16 @@ public class UserManager {
         throw new userDoesNotExistException("User does not exist.");
     }
 
+    /**
+     * changes the given user to premium user if the user is not already premium and
+     * the admin is an admin
+     *
+     * @param in    the user to change
+     * @param admin the admin
+     * @return the changed user
+     * @throws noPermissionException
+     * @throws userDoesNotExistException
+     */
     public User changeToPremium(User in, User admin) throws noPermissionException, userDoesNotExistException {
         if (admin.getUserType() != UserType.ADMIN) {
             throw new noPermissionException();
@@ -249,6 +264,16 @@ public class UserManager {
         throw new userDoesNotExistException("User does not exist.");
     }
 
+    /**
+     * changes the given user to admin if the user is not already admin and the
+     * admin is an admin
+     *
+     * @param in    the user to change
+     * @param admin the admin
+     * @return the changed user
+     * @throws noPermissionException
+     * @throws userDoesNotExistException
+     */
     public User changeToAdmin(User in, User admin) throws noPermissionException, userDoesNotExistException {
         if (admin.getUserType() != UserType.ADMIN) {
             throw new noPermissionException();
@@ -263,17 +288,20 @@ public class UserManager {
         throw new userDoesNotExistException("User does not exist.");
     }
 
-    // public User deleteUser(User in, User admin) throws userDoesNotExistException,
-    // noPermissionException {
-    // User potentialUser = getUser(in.getUserName());
-    // if (potentialUser.getUserType() == UserType.ADMIN || potentialUser == admin)
-    // {
-    // throw new noPermissionException("Admin cannot delete other admin or
-    // themselves.");
-    // }
-    // deleteUser(in);
-    // }
-
+    /**
+     * adds a car to the given user if the user exists
+     *
+     * @param in
+     * @param year
+     * @param licenseNumber
+     * @param model
+     * @param fuel
+     * @param fuelConsumption
+     * @param fuelTankCapacity
+     * @param currentFuelLevel
+     * @return the user with the added car
+     * @throws userDoesNotExistException
+     */
     public User addCarToUser(User in, int year, String licenseNumber, String model, FuelType fuel,
             double fuelConsumption, int fuelTankCapacity, int currentFuelLevel)
             throws userDoesNotExistException {
@@ -289,6 +317,11 @@ public class UserManager {
         }
     }
 
+    /**
+     * saves the registered users to a file
+     *
+     * @param filename the name of the file
+     */
     public void saveToFile(String filename) {
         try (FileOutputStream fileOut = new FileOutputStream(filename);
                 ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
@@ -298,6 +331,12 @@ public class UserManager {
         }
     }
 
+    /**
+     * loads the registered users from a file
+     *
+     * @param filename the name of the file
+     * @return the registered users
+     */
     public static Map<String, User> loadFromFile(String filename) {
         Map<String, User> registeredUsers = null;
         try (FileInputStream fileIn = new FileInputStream(filename);
@@ -313,7 +352,11 @@ public class UserManager {
         return registeredUsers;
     }
 
-    // TODO: remove this method
+    /**
+     * returns the registered users
+     *
+     * @return the registered users
+     */
     public Map<String, User> getRegisteredUsers() {
         return registeredUsers;
     }
