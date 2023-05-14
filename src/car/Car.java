@@ -1,7 +1,5 @@
 package car;
 
-import location.Location;
-
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -13,14 +11,12 @@ public class Car implements Serializable {
     private double fuelConsumption; // in energy e.g. l/100km or watts...
     private int fuelTankCapacity; // maximum fuel capacity
     private int currentFuelLevel; // in percentage
-    // TODO create new class of vehicle
-    private Location location;
 
     public Car() {
     }
 
     public Car(int year, String licenseNumber, String model, FuelType fuel, double fuelConsumption,
-            int fuelTankCapacity, int currentFuelLevel, Location location) {
+            int fuelTankCapacity, int currentFuelLevel) {
         this.year = year;
         this.licenseNumber = licenseNumber;
         this.model = model;
@@ -28,7 +24,6 @@ public class Car implements Serializable {
         this.fuelConsumption = fuelConsumption;
         this.fuelTankCapacity = fuelTankCapacity;
         this.currentFuelLevel = currentFuelLevel;
-        this.location = location;
     }
 
     public int getYear() {
@@ -87,14 +82,6 @@ public class Car implements Serializable {
         this.currentFuelLevel = currentFuelLevel;
     }
 
-    public Location getLocation() {
-        return this.location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
     public Car year(int year) {
         setYear(year);
         return this;
@@ -130,11 +117,6 @@ public class Car implements Serializable {
         return this;
     }
 
-    public Car location(Location location) {
-        setLocation(location);
-        return this;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -145,14 +127,12 @@ public class Car implements Serializable {
         Car car = (Car) o;
         return year == car.year && Objects.equals(licenseNumber, car.licenseNumber) && Objects.equals(model, car.model)
                 && Objects.equals(fuel, car.fuel) && fuelConsumption == car.fuelConsumption
-                && fuelTankCapacity == car.fuelTankCapacity && currentFuelLevel == car.currentFuelLevel
-                && Objects.equals(location, car.location);
+                && fuelTankCapacity == car.fuelTankCapacity && currentFuelLevel == car.currentFuelLevel;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(year, licenseNumber, model, fuel, fuelConsumption, fuelTankCapacity, currentFuelLevel,
-                location);
+        return Objects.hash(year, licenseNumber, model, fuel, fuelConsumption, fuelTankCapacity, currentFuelLevel);
     }
 
     @Override
@@ -163,7 +143,6 @@ public class Car implements Serializable {
                 "Fuel: " + getFuel() + "\n" +
                 "Fuel Consumption: " + getFuelConsumption() + "\n" +
                 "Fuel Tank Capacity: " + getFuelTankCapacity() + "\n" +
-                "Current Fuel Level: " + getCurrentFuelLevel() + "%" + "\n" +
-                "Location: " + getLocation();
+                "Current Fuel Level: " + getCurrentFuelLevel() + "%" + "\n";
     }
 }

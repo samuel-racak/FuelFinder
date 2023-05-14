@@ -86,7 +86,7 @@ public class CarController extends BasicController {
                 fuelType,
                 fuelConsumption,
                 maximumRange,
-                currentFuelLevel, null);
+                currentFuelLevel);
 
         // print all values
         System.out.println("Year: " + year);

@@ -1,6 +1,6 @@
 package navigation;
 
-import location.Point;
+import location.PointOfInterest;
 import location.Route;
 
 /**
@@ -16,5 +16,5 @@ public interface Strategy {
      * @param finish ending point
      * @return a route from start to finish
      */
-    Route findRoute(Point start, Point finish);
+    Route findRoute(PointOfInterest start, PointOfInterest finish);
 }

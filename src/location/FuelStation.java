@@ -4,19 +4,21 @@ import java.util.List;
 import java.util.Map;
 
 import car.FuelType;
+import java.util.Objects;
 
-public class FuelStation extends Point {
+public class FuelStation extends PointOfInterest {
     private Map<FuelType, Integer> fuels;
     private List<Service> services;
     private double rating;
     private int count = 0;
 
-    public FuelStation(String name, List<Point> successors, Map<FuelType, Integer> fuels, List<Service> services,
-            double rating) {
-        super(name, successors);
+    public FuelStation(String name, double latitude, double longitude, Map<FuelType, Integer> fuels,
+            List<Service> services, double rating, int count) {
+        super(name, latitude, longitude);
         this.fuels = fuels;
         this.services = services;
         this.rating = rating;
+        this.count = count;
     }
 
     public Map<FuelType, Integer> getFuels() {
@@ -25,10 +27,6 @@ public class FuelStation extends Point {
 
     public void setFuels(Map<FuelType, Integer> fuels) {
         this.fuels = fuels;
-    }
-
-    public void addFuel(FuelType fuelType, int price) {
-        fuels.putIfAbsent(fuelType, price);
     }
 
     public List<Service> getServices() {
@@ -43,13 +41,21 @@ public class FuelStation extends Point {
         return this.rating;
     }
 
-    // public void setRating(int rating) {
-    // this.rating = rating;
-    // }
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
 
     public void updateRating(double newRating) {
         rating = (rating + newRating) / (++count);
         // TODO check if correct weighted rating
+    }
+
+    public int getCount() {
+        return this.count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 
     public FuelStation fuels(Map<FuelType, Integer> fuels) {
@@ -63,7 +69,34 @@ public class FuelStation extends Point {
     }
 
     public FuelStation rating(double rating) {
-        updateRating(rating);
+        setRating(rating);
         return this;
+    }
+
+    public FuelStation count(int count) {
+        setCount(count);
+        return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof FuelStation)) {
+            return false;
+        }
+        FuelStation fuelStation = (FuelStation) o;
+        return Objects.equals(fuels, fuelStation.fuels) && Objects.equals(services, fuelStation.services)
+                && rating == fuelStation.rating && count == fuelStation.count;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(fuels, services, rating, count);
+    }
+
+    @Override
+    public String toString() {
+        return "Fuels: " + fuels + "\nServices: " + services + "\nRating: " + rating + "\nCount: " + count;
     }
 }

@@ -27,6 +27,6 @@ public class CarGenerator {
         int currentFuelLevel = rand.nextInt(101); // random current fuel level between 0 and 100
 
         return new Car(year, licenseNumber, model, fuel, fuelConsumption,
-                fuelTankCapacity, currentFuelLevel, null);
+                fuelTankCapacity, currentFuelLevel);
     }
 }

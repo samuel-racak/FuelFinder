@@ -1,6 +1,7 @@
 package location;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 // Todo: rename: maxSpeed -> speedLimit
 // Todo: rename: length -> distance
@@ -10,14 +11,13 @@ import java.io.Serializable;
 
 public class Route implements Serializable {
     private int length;
-    private Point start;
-    private Point finish;
-    private int maxSpeed;
+    private PointOfInterest destination;
+    private int maxSpeed; // will not be used in this project but is here for future use (e.g. for
+                          // calculating the time it takes to travel the route)
 
-    public Route(int length, Point start, Point finish, int maxSpeed) {
+    public Route(int length, PointOfInterest destination, int maxSpeed) {
         this.length = length;
-        this.start = start;
-        this.finish = finish;
+        this.destination = destination;
         this.maxSpeed = maxSpeed;
     }
 
@@ -29,20 +29,12 @@ public class Route implements Serializable {
         this.length = length;
     }
 
-    public Point getStart() {
-        return this.start;
+    public PointOfInterest getDestination() {
+        return this.destination;
     }
 
-    public void setStart(Point start) {
-        this.start = start;
-    }
-
-    public Point getFinish() {
-        return this.finish;
-    }
-
-    public void setFinish(Point finish) {
-        this.finish = finish;
+    public void setDestination(PointOfInterest destination) {
+        this.destination = destination;
     }
 
     public int getMaxSpeed() {
@@ -51,5 +43,41 @@ public class Route implements Serializable {
 
     public void setMaxSpeed(int maxSpeed) {
         this.maxSpeed = maxSpeed;
+    }
+
+    public Route length(int length) {
+        setLength(length);
+        return this;
+    }
+
+    public Route destination(PointOfInterest destination) {
+        setDestination(destination);
+        return this;
+    }
+
+    public Route maxSpeed(int maxSpeed) {
+        setMaxSpeed(maxSpeed);
+        return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof Route)) {
+            return false;
+        }
+        Route route = (Route) o;
+        return length == route.length && Objects.equals(destination, route.destination) && maxSpeed == route.maxSpeed;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(length, destination, maxSpeed);
+    }
+
+    @Override
+    public String toString() {
+        return "Length: " + length + "\nDestination: " + destination + "\nMax speed: " + maxSpeed;
     }
 }

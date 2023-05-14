@@ -10,7 +10,6 @@ import exceptions.noPermissionException;
 import exceptions.userDoesNotExistException;
 import exceptions.userNameTakenException;
 import exceptions.wrongCardDetailsException;
-import location.Location;
 import user.PaymentCard;
 import user.Session;
 import user.User;
@@ -317,10 +316,10 @@ public class SessionManager {
      * @return true if car added, false otherwise
      */
     public boolean addCarToUser(int year, String licenseNumber, String model, FuelType fuel,
-            double fuelConsumption, int fuelTankCapacity, int currentFuelLevel, Location location) {
+            double fuelConsumption, int fuelTankCapacity, int currentFuelLevel) {
         try {
             userManager.addCarToUser(getCurrentUser(), year, licenseNumber, model, fuel, fuelConsumption,
-                    fuelTankCapacity, currentFuelLevel, location);
+                    fuelTankCapacity, currentFuelLevel);
         } catch (userDoesNotExistException e) {
             return false;
         }
@@ -332,7 +331,7 @@ public class SessionManager {
             Car tempCar = CarGenerator.generateRandomCar();
             userManager.addCarToUser(in, tempCar.getYear(), tempCar.getLicenseNumber(),
                     tempCar.getModel(), tempCar.getFuel(), tempCar.getFuelConsumption(),
-                    tempCar.getFuelTankCapacity(), tempCar.getCurrentFuelLevel(), tempCar.getLocation());
+                    tempCar.getFuelTankCapacity(), tempCar.getCurrentFuelLevel());
         } catch (userDoesNotExistException e) {
             return false; // user not registered
         }

@@ -34,4 +34,9 @@ public class Service {
         setPrice(price);
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "Service Name: " + serviceName + "\nPrice: " + price;
+    }
 }

@@ -15,7 +15,6 @@ import exceptions.noPermissionException;
 import exceptions.userDoesNotExistException;
 import exceptions.userNameTakenException;
 import exceptions.wrongCardDetailsException;
-import location.Location;
 import user.PaymentCard;
 import user.PremiumUser;
 import user.User;
@@ -276,13 +275,13 @@ public class UserManager {
     // }
 
     public User addCarToUser(User in, int year, String licenseNumber, String model, FuelType fuel,
-            double fuelConsumption, int fuelTankCapacity, int currentFuelLevel, Location location)
+            double fuelConsumption, int fuelTankCapacity, int currentFuelLevel)
             throws userDoesNotExistException {
         User potentialUser = getUser(in.getUserName());
 
         if (potentialUser != null) {
             potentialUser.setCar(new Car(year, licenseNumber, model, fuel, fuelConsumption, fuelTankCapacity,
-                    currentFuelLevel, location));
+                    currentFuelLevel));
             System.out.println("Car added successfully!");
             return potentialUser;
         } else {
