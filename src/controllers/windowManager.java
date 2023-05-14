@@ -19,9 +19,8 @@ public class WindowManager {
     private Map<String, ? extends BasicController> controllers = new HashMap<>();
     private static WindowManager instance;
 
-    // public WindowManager(Stage stage) {
-    // // this.stage = stage;
-    // }
+    private WindowManager() {
+    }
 
     public static WindowManager getInstance() {
         if (instance == null) {
@@ -39,13 +38,13 @@ public class WindowManager {
         }
     }
 
-    public void addScene(String name, String fxmlFile) {
+    public void addScene(String name, String fxmlFile, SessionManager sessionManager) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/" + fxmlFile));
             Parent root = loader.load();
             BasicController controller = loader.getController();
             controller.setWindowManager(this);
-            controller.setSessionManager(SessionManager.getInstance()); // This is the default session manager
+            controller.setSessionManager(sessionManager); // This is the default session manager
             controller.setStage(stages.get("primaryStage")); // This is the default stage name
             // controller.setTitle();
             Scene scene = new Scene(root);
