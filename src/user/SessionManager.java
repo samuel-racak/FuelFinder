@@ -1,7 +1,10 @@
 package user;
 
 import java.time.LocalDate;
+import java.util.Map;
 
+import car.Car;
+import car.CarGenerator;
 import car.FuelType;
 import exceptions.noPermissionException;
 import exceptions.userDoesNotExistException;
@@ -11,8 +14,9 @@ import location.Location;
 
 public class SessionManager {
     private static SessionManager instance;
-    private UserManager userManager;
     private Session session;
+    private UserManager userManager;
+    // private POIManager poiManager;
 
     private SessionManager() {
         userManager = UserManager.getInstance();
@@ -101,10 +105,6 @@ public class SessionManager {
     public boolean changeUserName(String newUsername) {
         try {
             userManager.changeUserName(getCurrentUser(), newUsername);
-            System.out.println("username: " + getCurrentUser().getUserName());
-            for (User user : userManager.getRegisteredUsers().values()) {
-                System.out.println(user.getUserName());
-            }
         } catch (userDoesNotExistException | userNameTakenException e) {
             return false; // username not changed
         }
@@ -124,10 +124,88 @@ public class SessionManager {
     public boolean registerUser(String userName, String email, String password, LocalDate dateOfBirth, String gender) {
         try {
             userManager.registerUser(UserType.BASIC_USER, userName, email, password, dateOfBirth, gender, null);
+            System.out.println("dateOfBirth " + dateOfBirth);
         } catch (userNameTakenException e) {
             return false; // user not registered
         }
         session.setCurrentUser(userManager.getUser(userName));
+        return true;
+    }
+
+    /**
+     * registers a new admin with the given parameters
+     *
+     * @param userName
+     * @param email
+     * @param password
+     * @param dateOfBirth
+     * @param gender
+     * @return true if registration successful, false otherwise
+     */
+    public boolean registerAdmin(String userName, String email, String password, LocalDate dateOfBirth, String gender) {
+        try {
+            userManager.registerUser(UserType.ADMIN, userName, email, password, dateOfBirth, gender, null);
+        } catch (userNameTakenException e) {
+            return false; // user not registered
+        }
+        // session.setCurrentUser(userManager.getUser(in.getUserName()));
+        return true;
+    }
+
+    public boolean changeToPremium(User in, String cardNumber, LocalDate expirationDate, String securityCode) {
+        if (in.getUserType() == UserType.PREMIUM_USER || in.getUserType() == UserType.ADMIN) {
+            return true; // already of type userType or admin
+        }
+        try {
+            userManager.changeToPremium(in, cardNumber, expirationDate, securityCode);
+        } catch (userDoesNotExistException e) {
+            return false;
+        } catch (wrongCardDetailsException e) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * changes the type of the given user to the given type
+     *
+     * @param in
+     * @param admin
+     * @param userType
+     * @return true if type changed, false otherwise
+     */
+    public boolean changeUserType(User in, User admin, UserType userType) {
+        if (in.getUserType() == userType || in.getUserType() == UserType.ADMIN) {
+            return false;
+        }
+
+        try {
+            if (userType == UserType.ADMIN) {
+                userManager.changeToAdmin(in, admin);
+            } else if (userType == UserType.PREMIUM_USER) {
+                userManager.changeToPremium(in, admin);
+            }
+        } catch (noPermissionException | userDoesNotExistException e) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * checks if the given credit card details are valid
+     *
+     * @param creditCardNumber
+     * @param creditCardExpirationDate
+     * @param creditCardSecurityCode
+     * @return true if valid, false otherwise
+     */
+    public boolean checkCardDetails(String creditCardNumber, LocalDate creditCardExpirationDate,
+            String creditCardSecurityCode) {
+        try {
+            new PaymentCard(creditCardNumber, creditCardExpirationDate, creditCardSecurityCode);
+        } catch (wrongCardDetailsException e) {
+            return false;
+        }
         return true;
     }
 
@@ -146,12 +224,16 @@ public class SessionManager {
      * @return true if registration successful, false otherwise
      */
     public boolean registerPremiumUser(String userName, String email, String password, LocalDate dateOfBirth,
-            String gender, String creditCardNumber, String creditCardExpirationDate, String creditCardSecurityCode)
-            throws wrongCardDetailsException {
+            String gender, String creditCardNumber, LocalDate creditCardExpirationDate, String creditCardSecurityCode) {
 
         // let it throw exception if card details are wrong to handle it in the gui by
         // showing a message
-        PaymentCard card = new PaymentCard(creditCardNumber, creditCardExpirationDate, creditCardSecurityCode);
+        PaymentCard card;
+        try {
+            card = new PaymentCard(creditCardNumber, creditCardExpirationDate, creditCardSecurityCode);
+        } catch (wrongCardDetailsException e) {
+            return false;
+        }
 
         try {
             userManager.registerPremiumUser(UserType.PREMIUM_USER, userName, email, password, dateOfBirth, gender, null,
@@ -198,12 +280,15 @@ public class SessionManager {
      *
      * @param in
      * @param admin
-     * @return
+     * @return true if user deleted, false otherwise
      * @throws noPermissionException
      */
     public boolean deleteUser(User in, User admin) throws noPermissionException {
         if (admin.getUserType() != UserType.ADMIN) {
             throw new noPermissionException();
+        }
+        if (in.getUserType() == UserType.ADMIN) {
+            throw new noPermissionException(); // admin cannot delete another admin
         }
         try {
             userManager.deleteUser(in);
@@ -237,4 +322,21 @@ public class SessionManager {
         }
         return true;
     }
+
+    public boolean generateRandomCar(User in) {
+        try {
+            Car tempCar = CarGenerator.generateRandomCar();
+            userManager.addCarToUser(in, tempCar.getYear(), tempCar.getLicenseNumber(),
+                    tempCar.getModel(), tempCar.getFuel(), tempCar.getFuelConsumption(),
+                    tempCar.getFuelTankCapacity(), tempCar.getCurrentFuelLevel(), tempCar.getLocation());
+        } catch (userDoesNotExistException e) {
+            return false; // user not registered
+        }
+        return true;
+    }
+
+    public Map<String, User> getUsers() {
+        return userManager.getRegisteredUsers();
+    }
+
 }
