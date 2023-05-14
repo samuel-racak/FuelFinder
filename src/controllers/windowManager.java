@@ -12,15 +12,42 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The WindowManager class manages the stages, scenes, and controllers of a
+ * JavaFX application.
+ */
 public class WindowManager {
+    /**
+     * A map of stage names to Stage objects.
+     */
     private Map<String, Stage> stages = new HashMap<>();
+
+    /**
+     * A map of scene names to Scene objects.
+     */
     private Map<String, Scene> scenes = new HashMap<>();
+
+    /**
+     * A map of scene names to BasicController objects.
+     */
     private Map<String, ? extends BasicController> controllers = new HashMap<>();
+
+    /**
+     * The singleton instance of the WindowManager class.
+     */
     private static WindowManager instance;
 
+    /**
+     * Private constructor to prevent instantiation from outside the class.
+     */
     private WindowManager() {
     }
 
+    /**
+     * Returns the singleton instance of the WindowManager class.
+     *
+     * @return The singleton instance of the WindowManager class.
+     */
     public static WindowManager getInstance() {
         if (instance == null) {
             instance = new WindowManager();
@@ -28,6 +55,12 @@ public class WindowManager {
         return instance;
     }
 
+    /**
+     * Adds a Stage to the stages map with the given name.
+     *
+     * @param name  The name of the Stage to add.
+     * @param stage The Stage to add.
+     */
     public void addStage(String name, Stage stage) {
         // check if there is already a stage with the same name
         // if there is an instance use it
@@ -36,6 +69,15 @@ public class WindowManager {
         }
     }
 
+    /**
+     * Adds a Scene to the scenes map with the given name by loading it from an FXML
+     * file and setting its controller's windowManager and sessionManager
+     * properties.
+     *
+     * @param name           The name of the Scene to add.
+     * @param fxmlFile       The FXML file to load the Scene from.
+     * @param sessionManager The SessionManager to set on the Scene's controller.
+     */
     public void addScene(String name, String fxmlFile, SessionManager sessionManager) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/" + fxmlFile));
@@ -52,6 +94,13 @@ public class WindowManager {
         }
     }
 
+    /**
+     * Switches to a new Scene on a given Stage with a fade out and fade in
+     * transition.
+     *
+     * @param stageName The name of the Stage to switch Scenes on.
+     * @param sceneName The name of the Scene to switch to.
+     */
     public void switchToScene(String stageName, String sceneName) {
 
         Scene scene = scenes.get(sceneName);
@@ -85,11 +134,23 @@ public class WindowManager {
         }
     }
 
-    // returns primary stage
+    /**
+     * Returns a Stage from the stages map with the given name.
+     *
+     * @param name The name of the Stage to return.
+     * @return The Stage with the given name or null if it does not exist in the
+     *         stages map.
+     */
     public Stage getStage(String name) {
         return stages.get(name);
     }
 
+    /**
+     * Removes a Stage from the stages map with the given name and closes it if it
+     * exists.
+     *
+     * @param name The name of the Stage to remove and close.
+     */
     public void removeStage(String name) {
         Stage temp = (Stage) stages.get(name);
         if (temp != null) {
@@ -99,10 +160,24 @@ public class WindowManager {
         stages.remove(name);
     }
 
+    /**
+     * Returns a Scene from the scenes map with the given name.
+     *
+     * @param name The name of the Scene to return.
+     * @return The Scene with the given name or null if it does not exist in the
+     *         scenes map.
+     */
     public <T extends Scene> T getScene(String name) {
         return (T) scenes.get(name);
     }
 
+    /**
+     * Returns a BasicController from the controllers map with the given name.
+     *
+     * @param name The name of the BasicController to return.
+     * @return The BasicController with the given name or null if it does not exist
+     *         in the controllers map.
+     */
     public <T extends BasicController> T getController(String name) {
         return (T) controllers.get(name);
     }
