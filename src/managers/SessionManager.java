@@ -1,4 +1,4 @@
-package user;
+package managers;
 
 import java.time.LocalDate;
 import java.util.Map;
@@ -11,6 +11,10 @@ import exceptions.userDoesNotExistException;
 import exceptions.userNameTakenException;
 import exceptions.wrongCardDetailsException;
 import location.Location;
+import user.PaymentCard;
+import user.Session;
+import user.User;
+import user.UserType;
 
 public class SessionManager {
     private static SessionManager instance;

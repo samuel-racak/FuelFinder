@@ -10,9 +10,8 @@ import javafx.scene.image.Image;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-
-import user.SessionManager;
-import user.UserManager;
+import managers.SessionManager;
+import managers.UserManager;
 
 public class Main extends Application {
 

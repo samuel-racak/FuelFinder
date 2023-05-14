@@ -1,4 +1,4 @@
-package user;
+package managers;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -16,6 +16,10 @@ import exceptions.userDoesNotExistException;
 import exceptions.userNameTakenException;
 import exceptions.wrongCardDetailsException;
 import location.Location;
+import user.PaymentCard;
+import user.PremiumUser;
+import user.User;
+import user.UserType;
 
 public class UserManager {
     private static UserManager instance;

@@ -1,7 +1,7 @@
 package controllers;
 
 import javafx.stage.Stage;
-import user.SessionManager;
+import managers.SessionManager;
 
 public abstract class BasicController {
     protected WindowManager windowManager;
