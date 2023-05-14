@@ -1,13 +1,24 @@
 package user;
 
+import java.io.Serializable;
+import java.time.LocalDate;
+
 import exceptions.wrongCardDetailsException;
 
-public class PaymentCard {
+public class PaymentCard implements Serializable {
     private String cardNumber;
-    private String expirationDate;
+    private LocalDate expirationDate;
     private String securityCode;
 
-    public PaymentCard(String cardNumber, String expirationDate, String securityCode) throws wrongCardDetailsException {
+    public PaymentCard() {
+        // TODO: handle this situation
+        this.cardNumber = "";
+        this.expirationDate = LocalDate.now();
+        this.securityCode = "";
+    }
+
+    public PaymentCard(String cardNumber, LocalDate expirationDate, String securityCode)
+            throws wrongCardDetailsException {
         if (isValid(cardNumber)) {
             this.cardNumber = cardNumber;
             this.expirationDate = expirationDate;
@@ -28,10 +39,12 @@ public class PaymentCard {
      * @return true if valid, else false
      */
     public static boolean isValid(String cardNumber) {
+        cardNumber = cardNumber.replaceAll(" ", ""); // remove all spaces
         int sum = 0;
         int parity = cardNumber.length() % 2;
         for (int i = 0; i < cardNumber.length(); i++) {
-            int digit = Character.getNumericValue(cardNumber.charAt(i));
+            char c = cardNumber.charAt(i);
+            int digit = Character.getNumericValue(c);
             if (i % 2 != parity) {
                 sum += digit;
             } else if (digit > 4) {
@@ -47,7 +60,7 @@ public class PaymentCard {
         return cardNumber;
     }
 
-    public String getExpirationDate() {
+    public LocalDate getExpirationDate() {
         return expirationDate;
     }
 
