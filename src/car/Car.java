@@ -162,8 +162,8 @@ public class Car implements Serializable {
                 "Model: " + getModel() + "\n" +
                 "Fuel: " + getFuel() + "\n" +
                 "Fuel Consumption: " + getFuelConsumption() + "\n" +
-                "Maximum Range: " + getFuelTankCapacity() + "\n" +
-                "Current Fuel Level: " + getCurrentFuelLevel() + "\n" +
+                "Fuel Tank Capacity: " + getFuelTankCapacity() + "\n" +
+                "Current Fuel Level: " + getCurrentFuelLevel() + "%" + "\n" +
                 "Location: " + getLocation();
     }
 }
