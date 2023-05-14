@@ -1,2 +1,0 @@
-this will be the hardest to implement correctly
-haven't made whether to use Route class to represent one road or route as a whole

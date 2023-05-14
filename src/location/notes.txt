@@ -1,6 +1,0 @@
-to get info about type instanceof can be used which will add one point to the code review
-car can go with unlimited speed but will be limited by maxSpeed from route class -> this will be used to count how much time it will take to arrive to destination
-
-car might need some more information such as fuel tank capacity and consumption of in l/100km or l/1km
-
-create class Route which will represent calculated route from point a to point b from navigation
