@@ -1,7 +1,8 @@
+package app;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
-import controllers.WindowManager;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
@@ -13,6 +14,7 @@ import javafx.stage.Window;
 
 import managers.SessionManager;
 import managers.UserManager;
+import managers.WindowManager;
 
 /**
  * The Main class extends the Application class and is the entry point for the

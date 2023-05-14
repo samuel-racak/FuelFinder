@@ -1,4 +1,4 @@
-package controllers;
+package managers;
 
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +11,8 @@ import managers.SessionManager;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import controllers.BasicController;
 
 /**
  * The WindowManager class manages the stages, scenes, and controllers of a

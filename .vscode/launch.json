@@ -8,8 +8,8 @@
             "type": "java",
             "name": "Main",
             "request": "launch",
-            "mainClass": "Main",
-            "projectName": "FuelFinderNew_60ff31fc",
+            "mainClass": "app.Main",
+            "projectName": "FuelFinder_f3650a35",
             "vmArgs": "--module-path \"C:/Program Files/Java/javafx-sdk-17.0.6/lib\" --add-modules javafx.controls,javafx.fxml"
         }
     ]

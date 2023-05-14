@@ -2,6 +2,7 @@ package controllers;
 
 import javafx.stage.Stage;
 import managers.SessionManager;
+import managers.WindowManager;
 
 /**
  * This class is an abstract base class for all controllers in the application.
