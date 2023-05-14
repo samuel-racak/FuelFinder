@@ -49,9 +49,6 @@ public class LoginController extends BasicController {
                 if (loginTask.getValue()) {
                     System.out.println("user logged in");
                     windowManager.switchToScene("primaryStage", "mainScene");
-                    // clear text fields
-                    userNameTextField.clear();
-                    passwordTextField.clear();
                 } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
@@ -71,9 +68,6 @@ public class LoginController extends BasicController {
     public void register(ActionEvent event) {
         System.out.println("user wants to register");
         windowManager.switchToScene("primaryStage", "registerScene");
-        // clear text fields
-        userNameTextField.clear();
-        passwordTextField.clear();
     }
 
     @FXML
@@ -90,9 +84,6 @@ public class LoginController extends BasicController {
         } else {
             if (sessionManager.login(userName, password)) {
                 System.out.println("user logged in");
-                // clear text fields
-                userNameTextField.clear();
-                passwordTextField.clear();
                 if (sessionManager.isAdmin()) {
                     windowManager.switchToScene("primaryStage", "adminScene");
                 } else {
@@ -101,6 +92,7 @@ public class LoginController extends BasicController {
                     alert.setHeaderText("Admin Error");
                     alert.setContentText("You are not an admin");
                     alert.showAndWait();
+                    fillGUI();
                 }
 
             } else {
@@ -116,5 +108,12 @@ public class LoginController extends BasicController {
     @Override
     public void setTitle() {
         stage.setTitle("Login");
+    }
+
+    @Override
+    public void fillGUI() {
+        // clear text fields
+        userNameTextField.clear();
+        passwordTextField.clear();
     }
 }
